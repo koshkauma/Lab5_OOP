@@ -10,6 +10,7 @@ using lab_3.Helpers;
 using lab_3.PluginSignaturing;
 using System.Security.Cryptography;
 using System.IO;
+using lab_3.Crypto;
 
 namespace lab_3
 {
@@ -216,9 +217,109 @@ namespace lab_3
             }
         }
 
-       
+
+
+        private static List<Type> GetTypes<T>(Assembly assembly)
+        {
+            if (!typeof(T).IsInterface)
+            {
+                return null;
+            }
+            return assembly.GetTypes().Where(x => x.GetInterface(typeof(T).Name) != null).ToList();
+
+        }
+
+
+        Plugins dllList = new Plugins();
+
+        private void buttonFuncPlugin_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dlg = new OpenFileDialog()
+            {
+                Filter = "DLL files | *.dll"
+            };
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                Assembly assembly = Assembly.LoadFrom(dlg.FileName);
+                List<Type> pluginTypes = GetTypes<ICryptoPlugin>(assembly);
+
+                if (pluginTypes.Count != 0)
+                {
+                    for (int i = 0; i < pluginTypes.Count; i++)
+                    {
+
+                        ICryptoPlugin plugin = Activator.CreateInstance(pluginTypes[i]) as ICryptoPlugin;
+                        dllList.ListOfPlugins.Add(plugin.GetCryptoLoader());
+                        dllComboBox.Items.Add(dllList.ListOfPlugins[i]);
+                        panelCrypto.Controls.AddRange(dllList.ListOfPlugins[i].GetControls(new Size(100, 20)).ToArray());
+                    }
+
+                   
+                }
+            }
+            }
+
+        private void dllComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panelAdd_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panelCrypto_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void buttonEncrypt_Click(object sender, EventArgs e)
+        {
+            if (dllList.ListOfPlugins.Count != 0)
+            {   
+                 //////
+                if (listBoxOfProducts.Items.Count == 0)
+                {
+                    MessageBox.Show("В списке ничего нет!");
+                }
+                else
+                {
+                    if (saveFileDialog.ShowDialog() != DialogResult.Cancel)
+                    {
+                        list.SerializeItemsInList(saveFileDialog.FileName);
+                        dllList.ListOfPlugins[0].EncryptFile(panelCrypto.Controls, saveFileDialog.FileName);
+                        File.Delete(saveFileDialog.FileName);
+                    }
+                }
+
+                /////
+              
+            }
+        }
+
+        private void buttonDecrypt_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dlg = new OpenFileDialog();
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                string fileToLoad = dllList.ListOfPlugins[0].DecryptFile(panelCrypto.Controls, dlg.FileName);
+                try
+                {
+                    MessageBox.Show(fileToLoad);
+                    list.DeserializeItemsInList(fileToLoad, factoryFormEditor);
+                }
+                catch (Exception exception)
+                {
+                    string message = exception.Message;
+                    MessageBox.Show(message);
+                }
+                File.Delete(fileToLoad);
+            }
+        }
     }
     }
+    
 
 
 

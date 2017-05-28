@@ -47,7 +47,12 @@
             this.buttonLoadPlugin = new System.Windows.Forms.Button();
             this.buttonSignPlugin = new System.Windows.Forms.Button();
             this.buttonFuncPlugin = new System.Windows.Forms.Button();
+            this.panelCrypto = new System.Windows.Forms.Panel();
+            this.dllComboBox = new System.Windows.Forms.ComboBox();
+            this.buttonEncrypt = new System.Windows.Forms.Button();
+            this.buttonDecrypt = new System.Windows.Forms.Button();
             this.menuStripFile.SuspendLayout();
+            this.panelCrypto.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonDelete
@@ -68,6 +73,7 @@
             this.panelAdd.Name = "panelAdd";
             this.panelAdd.Size = new System.Drawing.Size(262, 497);
             this.panelAdd.TabIndex = 3;
+            this.panelAdd.Paint += new System.Windows.Forms.PaintEventHandler(this.panelAdd_Paint);
             // 
             // buttonAdd
             // 
@@ -131,7 +137,7 @@
             this.выходToolStripMenuItem});
             this.menuStripFile.Location = new System.Drawing.Point(0, 0);
             this.menuStripFile.Name = "menuStripFile";
-            this.menuStripFile.Size = new System.Drawing.Size(1034, 24);
+            this.menuStripFile.Size = new System.Drawing.Size(1097, 24);
             this.menuStripFile.TabIndex = 10;
             // 
             // работаСФайломToolStripMenuItem
@@ -185,7 +191,7 @@
             // 
             // buttonLoadPlugin
             // 
-            this.buttonLoadPlugin.Location = new System.Drawing.Point(828, 79);
+            this.buttonLoadPlugin.Location = new System.Drawing.Point(859, 80);
             this.buttonLoadPlugin.Name = "buttonLoadPlugin";
             this.buttonLoadPlugin.Size = new System.Drawing.Size(168, 23);
             this.buttonLoadPlugin.TabIndex = 12;
@@ -195,7 +201,7 @@
             // 
             // buttonSignPlugin
             // 
-            this.buttonSignPlugin.Location = new System.Drawing.Point(828, 153);
+            this.buttonSignPlugin.Location = new System.Drawing.Point(859, 154);
             this.buttonSignPlugin.Name = "buttonSignPlugin";
             this.buttonSignPlugin.Size = new System.Drawing.Size(168, 23);
             this.buttonSignPlugin.TabIndex = 14;
@@ -205,18 +211,61 @@
             // 
             // buttonFuncPlugin
             // 
-            this.buttonFuncPlugin.Location = new System.Drawing.Point(828, 108);
+            this.buttonFuncPlugin.Location = new System.Drawing.Point(859, 109);
             this.buttonFuncPlugin.Name = "buttonFuncPlugin";
             this.buttonFuncPlugin.Size = new System.Drawing.Size(168, 39);
             this.buttonFuncPlugin.TabIndex = 15;
             this.buttonFuncPlugin.Text = "Загрузить функциональный плагин";
             this.buttonFuncPlugin.UseVisualStyleBackColor = true;
+            this.buttonFuncPlugin.Click += new System.EventHandler(this.buttonFuncPlugin_Click);
+            // 
+            // panelCrypto
+            // 
+            this.panelCrypto.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.panelCrypto.Controls.Add(this.buttonDecrypt);
+            this.panelCrypto.Controls.Add(this.buttonEncrypt);
+            this.panelCrypto.Controls.Add(this.dllComboBox);
+            this.panelCrypto.Location = new System.Drawing.Point(827, 190);
+            this.panelCrypto.Name = "panelCrypto";
+            this.panelCrypto.Size = new System.Drawing.Size(239, 387);
+            this.panelCrypto.TabIndex = 16;
+            this.panelCrypto.Paint += new System.Windows.Forms.PaintEventHandler(this.panelCrypto_Paint);
+            // 
+            // dllComboBox
+            // 
+            this.dllComboBox.FormattingEnabled = true;
+            this.dllComboBox.Location = new System.Drawing.Point(16, 17);
+            this.dllComboBox.Name = "dllComboBox";
+            this.dllComboBox.Size = new System.Drawing.Size(210, 21);
+            this.dllComboBox.TabIndex = 0;
+            this.dllComboBox.SelectedIndexChanged += new System.EventHandler(this.dllComboBox_SelectedIndexChanged);
+            // 
+            // buttonEncrypt
+            // 
+            this.buttonEncrypt.Location = new System.Drawing.Point(16, 322);
+            this.buttonEncrypt.Name = "buttonEncrypt";
+            this.buttonEncrypt.Size = new System.Drawing.Size(99, 44);
+            this.buttonEncrypt.TabIndex = 2;
+            this.buttonEncrypt.Text = "Зашифровать и сохранить";
+            this.buttonEncrypt.UseVisualStyleBackColor = true;
+            this.buttonEncrypt.Click += new System.EventHandler(this.buttonEncrypt_Click);
+            // 
+            // buttonDecrypt
+            // 
+            this.buttonDecrypt.Location = new System.Drawing.Point(121, 322);
+            this.buttonDecrypt.Name = "buttonDecrypt";
+            this.buttonDecrypt.Size = new System.Drawing.Size(105, 44);
+            this.buttonDecrypt.TabIndex = 3;
+            this.buttonDecrypt.Text = "Расшифровать и загрузить";
+            this.buttonDecrypt.UseVisualStyleBackColor = true;
+            this.buttonDecrypt.Click += new System.EventHandler(this.buttonDecrypt_Click);
             // 
             // serializeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1034, 638);
+            this.ClientSize = new System.Drawing.Size(1097, 638);
+            this.Controls.Add(this.panelCrypto);
             this.Controls.Add(this.buttonFuncPlugin);
             this.Controls.Add(this.buttonSignPlugin);
             this.Controls.Add(this.buttonLoadPlugin);
@@ -235,6 +284,7 @@
             this.Text = "Лаб. работа №3";
             this.menuStripFile.ResumeLayout(false);
             this.menuStripFile.PerformLayout();
+            this.panelCrypto.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -260,6 +310,10 @@
         private System.Windows.Forms.Button buttonLoadPlugin;
         private System.Windows.Forms.Button buttonSignPlugin;
         private System.Windows.Forms.Button buttonFuncPlugin;
+        private System.Windows.Forms.Panel panelCrypto;
+        private System.Windows.Forms.ComboBox dllComboBox;
+        private System.Windows.Forms.Button buttonDecrypt;
+        private System.Windows.Forms.Button buttonEncrypt;
     }
 }
 

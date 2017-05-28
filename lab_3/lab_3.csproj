@@ -59,6 +59,8 @@
     <Compile Include="CosmeticListClass.cs" />
     <Compile Include="Crypto\CryptoLoader.cs" />
     <Compile Include="Crypto\ICryptoPlugin.cs" />
+    <Compile Include="Crypto\Plugins.cs" />
+    <Compile Include="Helpers\ComponentCreatorHelper.cs" />
     <Compile Include="Helpers\EnumHelp.cs" />
     <Compile Include="Factories\AllProductsFactory.cs" />
     <Compile Include="Factories\CosmeticFactory.cs" />

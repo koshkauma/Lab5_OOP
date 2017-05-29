@@ -231,6 +231,9 @@ namespace lab_3
 
 
         Plugins dllList = new Plugins();
+        //string will be our extension 
+        Dictionary<string, int> pluginsExtensions = new Dictionary<string, int>();
+    
 
         private void buttonFuncPlugin_Click(object sender, EventArgs e)
         {
@@ -249,10 +252,13 @@ namespace lab_3
                     {
 
                         ICryptoPlugin plugin = Activator.CreateInstance(pluginTypes[i]) as ICryptoPlugin;
+                        //adding plugin to list of plugins
                         dllList.ListOfPlugins.Add(plugin.GetCryptoLoader());
+                        //adding to dictionary our extension and index at list
+                        pluginsExtensions.Add(plugin.GetBasicExtension(), i);
 
                         dllComboBox.Items.Add(dllList.ListOfPlugins[i].GetAlgorithmName());
-                        panelCrypto.Controls.AddRange(dllList.ListOfPlugins[i].GetControls(new Size(100, 20)).ToArray());
+                      //  panelCrypto.Controls.AddRange(dllList.ListOfPlugins[i].GetControls(new Size(100, 20)).ToArray());
                     }
 
                    
@@ -260,26 +266,76 @@ namespace lab_3
             }
             }
 
-        private void dllComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
 
+        private void dllComboBox_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            panelCrypto.Controls.Clear();
+            panelCrypto.Controls.AddRange(dllList.ListOfPlugins[dllComboBox.SelectedIndex].GetControls(new Size(100, 20)).ToArray());
         }
 
-        private void panelAdd_Paint(object sender, PaintEventArgs e)
+        private void buttonDecrypt_Click_1(object sender, EventArgs e)
         {
+            //user choose file from directory
+            OpenFileDialog dlg = new OpenFileDialog();
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                //getting file name 
+                string inputFilePath = dlg.FileName;
+                //getting extension of file we have to decrypt
+                string cryptoFileExt = Path.GetExtension(inputFilePath);
+              
+                //getting current algorithm 
+                int currentIndexOfUsedPlugin = dllComboBox.SelectedIndex;
 
+                //check if dictionary contains extension of chosen file
+                if (pluginsExtensions.ContainsKey(cryptoFileExt))
+                {
+                    //if we can decrypt such file 
+                    //compare current alg. at combobox with alg. we need to use
+                    int indexOfPluginForExt = pluginsExtensions[cryptoFileExt];
+  
+                    if (currentIndexOfUsedPlugin == indexOfPluginForExt)
+                    {
+                        string fileToLoad = dllList.ListOfPlugins[0].DecryptFile(panelCrypto.Controls, inputFilePath);
+                        try
+                        {
+                            MessageBox.Show(fileToLoad);
+                            list.DeserializeItemsInList(fileToLoad, factoryFormEditor);
+                        }
+                        catch (Exception exception)
+                        {
+                            string message = exception.Message;
+                            MessageBox.Show(message);
+                        }
+                        File.Delete(fileToLoad);
+                    }
+                    else
+                    {
+                        //if no, we load controls panel for needed alg. 
+                        dllComboBox.SelectedIndex = indexOfPluginForExt;
+                        //letting the user know
+                        MessageBox.Show("Заполните поля для дешифрования файла с расширением!" + cryptoFileExt);
+                    }
+
+                }
+                else
+                {
+                    DialogResult dialogResult = MessageBox.Show("Файлы с данным расширением не подлежат расшифровке!\r\n Попробовать открыть данный файл обычным способом?",
+                        "Внимание!", MessageBoxButtons.YesNo);
+                    if (dialogResult == DialogResult.Yes)
+                    {
+                        //try to open file without any decryption
+                        десToolStripMenuItem.PerformClick();
+                    }
+                }
+            }
         }
 
-        private void panelCrypto_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void buttonEncrypt_Click(object sender, EventArgs e)
+        private void buttonEncrypt_Click_1(object sender, EventArgs e)
         {
             if (dllList.ListOfPlugins.Count != 0)
-            {   
-                 //////
+            {
+                //////
                 if (listBoxOfProducts.Items.Count == 0)
                 {
                     MessageBox.Show("В списке ничего нет!");
@@ -295,27 +351,7 @@ namespace lab_3
                 }
 
                 /////
-              
-            }
-        }
 
-        private void buttonDecrypt_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog dlg = new OpenFileDialog();
-            if (dlg.ShowDialog() == DialogResult.OK)
-            {
-                string fileToLoad = dllList.ListOfPlugins[0].DecryptFile(panelCrypto.Controls, dlg.FileName);
-                try
-                {
-                    MessageBox.Show(fileToLoad);
-                    list.DeserializeItemsInList(fileToLoad, factoryFormEditor);
-                }
-                catch (Exception exception)
-                {
-                    string message = exception.Message;
-                    MessageBox.Show(message);
-                }
-                File.Delete(fileToLoad);
             }
         }
     }

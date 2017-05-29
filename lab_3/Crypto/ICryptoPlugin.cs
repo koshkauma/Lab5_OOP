@@ -8,5 +8,6 @@ namespace lab_3.Crypto
     public interface ICryptoPlugin
     {
         CryptoLoader GetCryptoLoader();
+        string GetBasicExtension();
     }
 }

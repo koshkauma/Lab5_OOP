@@ -101,7 +101,6 @@ namespace lab_3.Crypto
             int i = 0;
             foreach(Control controlItem in currentControls)
             {
-                MessageBox.Show(controlItem.Name + i.ToString());
                 if (controlItem is TextBox && controlItem.Name == "keyText")
                 {
                     TextBox result = (TextBox)controlItem;
@@ -117,8 +116,6 @@ namespace lab_3.Crypto
 
         public abstract void EncryptFile(Control.ControlCollection controls, string sourcePath);
         public abstract string DecryptFile(Control.ControlCollection controls, string sourcePath);
-
-        public abstract void LoadDataToControls(Control.ControlCollection controls);
 
 
     }

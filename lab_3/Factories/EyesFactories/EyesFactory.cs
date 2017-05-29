@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using lab_3.Helpers;
 using lab_3.Classes;
 using lab_3.Classes.ForEyes;
 
@@ -15,8 +16,8 @@ namespace lab_3.Factories.EyesFactories
         {
             List<Control> resultList = base.GetListControl(size, leftCoord);
 
-            resultList.Add(GetLabel("wateproof", "Наличие св-ва водойстойкости?", size, new Point(leftCoord, 215), 9));
-            resultList.Add(GetCheckBox("waterproof", size, new Point(leftCoord, 235), 10));
+            resultList.Add(ComponentCreatorHelper.GetLabel("wateproof", "Наличие св-ва водойстойкости?", size, new Point(leftCoord, 215), 9));
+            resultList.Add(ComponentCreatorHelper.GetCheckBox("waterproof", "", size, new Point(leftCoord, 235), 10));
 
             return resultList;
         }

@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using lab_3.Classes;
 using lab_3.Classes.ForLips;
+using lab_3.Helpers;
 
 namespace lab_3.Factories.LipFactories
 {
@@ -25,12 +26,12 @@ namespace lab_3.Factories.LipFactories
 
             List<string> values = EnumHelper<Lipstick.TypeOfPackage>.GetEnumValues();
             List<string> names = EnumHelper<Lipstick.TypeOfPackage>.GetAllDescriptions();
-            resultList.Add(GetLabel("shimmer", "Содержание блесток", size, new Point(leftCoord, 260), 11));
-            resultList.Add(GetCheckBox("shimmer", size, new Point(leftCoord, 280), 12));
+            resultList.Add(ComponentCreatorHelper.GetLabel("shimmer", "Содержание блесток", size, new Point(leftCoord, 260), 11));
+            resultList.Add(ComponentCreatorHelper.GetCheckBox("shimmer", "", size, new Point(leftCoord, 280), 12));
 
             values = EnumHelper<LipGloss.GradeOfCoverage>.GetEnumValues();
             names = EnumHelper<LipGloss.GradeOfCoverage>.GetAllDescriptions();
-            resultList.Add(GetLabel("coverage", "Степень покрытия", size, new Point(leftCoord, 305), 13));
+            resultList.Add(ComponentCreatorHelper.GetLabel("coverage", "Степень покрытия", size, new Point(leftCoord, 305), 13));
             resultList.Add(GetComboBox("coverage", size, new Point(leftCoord, 325), 14, names, values));
 
             return resultList;

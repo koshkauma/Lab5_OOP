@@ -26,17 +26,16 @@ namespace lab_3.Crypto
                     {
                         result = reader.ReadToEnd();
                     }
+                    Button button = (Button)sender;
+                    Control panel = button.Parent;
+                    TextBox textBoxToEdit = GetKeyTextBox(panel);
+
+                    textBoxToEdit.Text = result;
                 }
                 catch
                 {
-                    throw new Exception("Не удалось прочитать ключ из файла!");
+                    MessageBox.Show("Не удалось прочитать ключ из файла!");
                 }
-
-                Button button = (Button)sender;
-                Control panel = button.Parent;
-                TextBox textBoxToEdit = GetKeyTextBox(panel);
-
-                textBoxToEdit.Text = result;
             }
         }
 
@@ -57,7 +56,7 @@ namespace lab_3.Crypto
 
         public abstract List<Control> GetControls(Size size);
 
-        public abstract bool CheckFiels(Control.ControlCollection controls);
+        public abstract bool CheckFields(Control.ControlCollection controls);
         public abstract void EncryptFile(Control.ControlCollection controls, string sourcePath);
         public abstract string DecryptFile(Control.ControlCollection controls, string sourcePath);
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using lab_3.Helpers;
 using lab_3.Classes;
 using lab_3.Classes.ForEyes;
 
@@ -25,12 +26,12 @@ namespace lab_3.Factories.EyesFactories
 
             List<string> values = EnumHelper<Eyeshadow.KindOfEyeshadow>.GetEnumValues();
             List<string> names = EnumHelper<Eyeshadow.KindOfEyeshadow>.GetAllDescriptions();
-            resultList.Add(GetLabel("kindOfEyeshadow", "Тип теней", size, new Point(leftCoord, 260), 11));
+            resultList.Add(ComponentCreatorHelper.GetLabel("kindOfEyeshadow", "Тип теней", size, new Point(leftCoord, 260), 11));
             resultList.Add(GetComboBox("kindOfEyeshadow", size, new Point(leftCoord, 280), 12, names, values));
 
             values = EnumHelper<Eyeshadow.FormOfPackage>.GetEnumValues();
             names = EnumHelper<Eyeshadow.FormOfPackage>.GetAllDescriptions();
-            resultList.Add(GetLabel("package", "Форма упаковки", size, new Point(leftCoord, 305), 13));
+            resultList.Add(ComponentCreatorHelper.GetLabel("package", "Форма упаковки", size, new Point(leftCoord, 305), 13));
             resultList.Add(GetComboBox("package", size, new Point(leftCoord, 325), 14, names, values));
 
             return resultList;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using lab_3.Classes;
+using lab_3.Helpers;
 using lab_3.Classes.ForLips;
 
 namespace lab_3.Factories.LipFactories
@@ -25,12 +26,12 @@ namespace lab_3.Factories.LipFactories
 
             List<string> values = EnumHelper<LipPencil.TypeOfPencil>.GetEnumValues();
             List<string> names = EnumHelper<LipPencil.TypeOfPencil>.GetAllDescriptions();
-            resultList.Add(GetLabel("typeOfPencil", "Устойство карандаша", size, new Point(leftCoord, 260), 11));
+            resultList.Add(ComponentCreatorHelper.GetLabel("typeOfPencil", "Устойство карандаша", size, new Point(leftCoord, 260), 11));
             resultList.Add(GetComboBox("typeOfPencil", size, new Point(leftCoord, 280), 12, names, values));
 
             values = EnumHelper<LipPencil.TypeOfTexture>.GetEnumValues();
             names = EnumHelper<LipPencil.TypeOfTexture>.GetAllDescriptions();
-            resultList.Add(GetLabel("textureType", "Текстура", size, new Point(leftCoord, 305), 13));
+            resultList.Add(ComponentCreatorHelper.GetLabel("textureType", "Текстура", size, new Point(leftCoord, 305), 13));
             resultList.Add(GetComboBox("textureType", size, new Point(leftCoord, 325), 14, names, values));
 
             return resultList;

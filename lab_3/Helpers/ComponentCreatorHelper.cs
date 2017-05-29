@@ -29,28 +29,9 @@ namespace lab_3.Helpers
         }
 
 
-        public static TextBox GetTextBox(string name, Size size, Point location,
-            KeyPressEventHandler keyPressEvent)
-        {
-            TextBox textboxToCreate = new TextBox();
-            textboxToCreate.Location = location;
-            textboxToCreate.Name = name;
-            textboxToCreate.KeyPress += keyPressEvent;
-            return textboxToCreate;
-        }
 
-        public static Label GetLabel(string name, string text, Size size, Point location)
-        {
-            Label labelToCreate = new Label();
-            labelToCreate.Location = location;
-            labelToCreate.Name = name;
-            labelToCreate.Text = text;
-            labelToCreate.Size = size;
-            labelToCreate.BackColor = Color.Transparent;
-            return labelToCreate;
-        }
 
-        public static Button GetButton(string name, string text, Size size, Point location, EventHandler buttonClick)
+        public static Button GetButton(string name, string text, Size size, Point location, EventHandler buttonClick, int tabIndex)
         {
             Button buttonToCreate = new Button();
             buttonToCreate.Name = name;
@@ -58,20 +39,9 @@ namespace lab_3.Helpers
             buttonToCreate.Size = size;
             buttonToCreate.Location = location;
             buttonToCreate.Click += buttonClick;
+            buttonToCreate.TabIndex = tabIndex;
             return buttonToCreate;
         }
-
-        public static CheckBox GetCheckBox(string name, string text, Size size, Point location)
-        {
-            CheckBox result = new CheckBox();
-            result.Name = name;
-            result.Text = text;
-            result.Size = size;
-            result.Location = location;
-            result.Checked = true;
-            return result;
-        }
-
 
         public static bool CheckTextBoxes(Control.ControlCollection controlList)
         {
@@ -89,6 +59,43 @@ namespace lab_3.Helpers
                 }
                 i++;
             }
+            return result;
+        }
+
+
+        public static TextBox GetTextBox(string name, Size size, Point location, int tabIndex,
+         KeyPressEventHandler keyPressEvent)
+        {
+            TextBox textboxToCreate = new TextBox();
+            textboxToCreate.Location = location;
+            textboxToCreate.Name = name;
+            textboxToCreate.TabIndex = tabIndex;
+            textboxToCreate.KeyPress += keyPressEvent;
+            return textboxToCreate;
+        }
+
+        public static Label GetLabel(string name, string text, Size size, Point location, int tabIndex)
+        {
+            Label labelToCreate = new Label();
+            labelToCreate.Location = location;
+            labelToCreate.Name = name;
+            labelToCreate.Text = text;
+            labelToCreate.Size = size;
+            labelToCreate.BackColor = Color.Transparent;
+            labelToCreate.TabIndex = tabIndex;
+            return labelToCreate;
+        }
+
+
+        public static CheckBox GetCheckBox(string name, string text, Size size, Point location, int tabIndex)
+        {
+            CheckBox result = new CheckBox();
+            result.Name = name;
+            result.Size = size;
+            result.Text = text;
+            result.Location = location;
+            result.TabIndex = tabIndex;
+            result.Checked = true;
             return result;
         }
 

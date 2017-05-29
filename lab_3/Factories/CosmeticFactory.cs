@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Drawing;
+using lab_3.Helpers;
 using lab_3.Classes;
 
 namespace lab_3.Factories
@@ -27,70 +28,8 @@ namespace lab_3.Factories
         const int colorButtonIndex = 3;
 
         public abstract object GetClassName();
-
-        public void TextBoxString_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if ((e.KeyChar != backspaceCode) && (e.KeyChar != ' ') && !Char.IsLetterOrDigit(e.KeyChar))
-            {
-                e.Handled = true;
-            }
-        }
-
-        public void TextBoxDigits_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!char.IsDigit(e.KeyChar) && (e.KeyChar != backspaceCode))
-            {
-                e.Handled = true;
-            }
-        }
-
-
-        public TextBox GetTextBox(string name, Size size, Point location, int tabIndex,
-            KeyPressEventHandler keyPressEvent)
-        {
-            TextBox textboxToCreate = new TextBox();
-            textboxToCreate.Location = location;
-            textboxToCreate.Name = name;
-            textboxToCreate.TabIndex = tabIndex;
-            textboxToCreate.KeyPress += keyPressEvent;
-            return textboxToCreate;
-        }
-
-        public Label GetLabel(string name, string text, Size size, Point location, int tabIndex)
-        {
-            Label labelToCreate = new Label();
-            labelToCreate.Location = location;
-            labelToCreate.Name = name;
-            labelToCreate.Text = text;
-            labelToCreate.Size = size;
-            labelToCreate.BackColor = Color.Transparent;
-            labelToCreate.TabIndex = tabIndex;
-            return labelToCreate;
-        }
-       
-        public ComboBox GetComboBox(string name, Size size, Point location, int tabIndex, List<string> names, List<string> values)
-        {
-            ComboBox comboBoxToCreate = new ComboBox();
-            comboBoxToCreate.Name = name;
-            comboBoxToCreate.TabIndex = tabIndex;
-
-            int len = values.Count;
-            List<Item> dataSource = new List<Item>();
         
-            for (int i = 0; i < len; i++)
-            {
-                dataSource.Add(new Item(names[i], values[i]));
-            }
-            
-            comboBoxToCreate.DataSource = dataSource;
-            comboBoxToCreate.DisplayMember = "NameToShow";
-            comboBoxToCreate.ValueMember = "Value";
 
-            comboBoxToCreate.Location = location;
-            comboBoxToCreate.DropDownStyle = ComboBoxStyle.DropDownList;
-            return comboBoxToCreate;
-        }
-        
         private void buttonColor_Click(object sender, EventArgs e)
         {
             ColorDialog colorDialog = new ColorDialog();
@@ -113,34 +52,48 @@ namespace lab_3.Factories
             return buttonToCreate;
         }
 
-        public CheckBox GetCheckBox(string name, Size size, Point location, int tabIndex)
+        public ComboBox GetComboBox(string name, Size size, Point location, int tabIndex, List<string> names, List<string> values)
         {
-            CheckBox result = new CheckBox();
-            result.Name = name;
-            result.Size = size;
-            result.Location = location;
-            result.TabIndex = tabIndex;
-            result.Checked = true;
-            return result;
+            ComboBox comboBoxToCreate = new ComboBox();
+            comboBoxToCreate.Name = name;
+            comboBoxToCreate.TabIndex = tabIndex;
+
+            int len = values.Count;
+            List<Item> dataSource = new List<Item>();
+
+            for (int i = 0; i < len; i++)
+            {
+                dataSource.Add(new Item(names[i], values[i]));
+            }
+
+            comboBoxToCreate.DataSource = dataSource;
+            comboBoxToCreate.DisplayMember = "NameToShow";
+            comboBoxToCreate.ValueMember = "Value";
+
+            comboBoxToCreate.Location = location;
+            comboBoxToCreate.DropDownStyle = ComboBoxStyle.DropDownList;
+            return comboBoxToCreate;
         }
+
+
 
         public virtual List<Control> GetListControl(Size size, int leftCoord)
         {
             List<Control> resultList = new List<Control>();
 
-            resultList.Add(GetLabel("productName", "Название продукта", size, new Point(leftCoord, 10), 1));
-            resultList.Add(GetTextBox("productName", size, new Point(leftCoord, 30), 2, TextBoxString_KeyPress));
+            resultList.Add(ComponentCreatorHelper.GetLabel("productName", "Название продукта", size, new Point(leftCoord, 10), 1));
+            resultList.Add(ComponentCreatorHelper.GetTextBox("productName", size, new Point(leftCoord, 30), 2, ComponentCreatorHelper.TextBoxString_KeyPress));
      
 
-            resultList.Add(GetLabel("brand", "Бренд", size, new Point(leftCoord, 60), 3));
-            resultList.Add(GetTextBox("brand", size, new Point(leftCoord, 80), 4, TextBoxString_KeyPress));
+            resultList.Add(ComponentCreatorHelper.GetLabel("brand", "Бренд", size, new Point(leftCoord, 60), 3));
+            resultList.Add(ComponentCreatorHelper.GetTextBox("brand", size, new Point(leftCoord, 80), 4, ComponentCreatorHelper.TextBoxString_KeyPress));
 
             List<string> namesOfItems = EnumHelper<CosmeticProduct.PriceCategory>.GetAllDescriptions();
             List<string> values = EnumHelper<CosmeticProduct.PriceCategory>.GetEnumValues();
-            resultList.Add(GetLabel("priceCategory", "Ценовая категория", size, new Point(leftCoord, 110), 5));
+            resultList.Add(ComponentCreatorHelper.GetLabel("priceCategory", "Ценовая категория", size, new Point(leftCoord, 110), 5));
             resultList.Add(GetComboBox("priceCategory", size, new Point(leftCoord, 130), 6, namesOfItems, values));
 
-            resultList.Add(GetLabel("color", "Цвет", size, new Point(leftCoord, 160), 7));
+            resultList.Add(ComponentCreatorHelper.GetLabel("color", "Цвет", size, new Point(leftCoord, 160), 7));
             resultList.Add(GetPaletteButton("colorButton", new Size(50, 30), new Point(leftCoord, 180), 8, buttonColor_Click));
 
             return resultList;

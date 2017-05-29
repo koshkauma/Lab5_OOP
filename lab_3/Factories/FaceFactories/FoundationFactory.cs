@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using lab_3.Classes;
 using lab_3.Classes.ForFace;
+using lab_3.Helpers;
 
 namespace lab_3.Factories.FaceFactories
 {
@@ -23,12 +24,12 @@ namespace lab_3.Factories.FaceFactories
         {
             List<Control> resultList = base.GetListControl(size, leftCoord);
 
-            resultList.Add(GetLabel("spf", "Наличие spf-фактора", size, new Point(leftCoord, 310), 13));
-            resultList.Add(GetCheckBox("spf", size, new Point(leftCoord, 330), 14));
+            resultList.Add(ComponentCreatorHelper.GetLabel("spf", "Наличие spf-фактора", size, new Point(leftCoord, 310), 13));
+            resultList.Add(ComponentCreatorHelper.GetCheckBox("spf", "", size, new Point(leftCoord, 330), 14));
 
             List<string> values = EnumHelper<Foundation.GradeOfCoverage>.GetEnumValues();
             List<string> names = EnumHelper<Foundation.GradeOfCoverage>.GetAllDescriptions();
-            resultList.Add(GetLabel("coverageGrade", "Тип покрытия", size, new Point(leftCoord, 355), 15));
+            resultList.Add(ComponentCreatorHelper.GetLabel("coverageGrade", "Тип покрытия", size, new Point(leftCoord, 355), 15));
             resultList.Add(GetComboBox("coverageGrade", size, new Point(leftCoord, 375), 16, names, values));
 
             return resultList;

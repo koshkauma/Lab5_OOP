@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using lab_3.Classes;
+using lab_3.Helpers;
 using lab_3.Classes.ForFace;
 
 namespace lab_3.Factories.FaceFactories
@@ -25,11 +26,11 @@ namespace lab_3.Factories.FaceFactories
 
             List<string> values = EnumHelper<Powder.TypeOfPackage>.GetEnumValues();
             List<string> names = EnumHelper<Powder.TypeOfPackage>.GetAllDescriptions();
-            resultList.Add(GetLabel("powderType", "Тип пудры", size, new Point(leftCoord, 310), 13));
+            resultList.Add(ComponentCreatorHelper.GetLabel("powderType", "Тип пудры", size, new Point(leftCoord, 310), 13));
             resultList.Add(GetComboBox("powderType", size, new Point(leftCoord, 330), 14, names, values));
 
-            resultList.Add(GetLabel("talcContain", "Содержание талька", size, new Point(leftCoord, 355), 15));
-            resultList.Add(GetCheckBox("talcContain", size, new Point(leftCoord, 375), 16));
+            resultList.Add(ComponentCreatorHelper.GetLabel("talcContain", "Содержание талька", size, new Point(leftCoord, 355), 15));
+            resultList.Add(ComponentCreatorHelper.GetCheckBox("talcContain", "", size, new Point(leftCoord, 375), 16));
 
             return resultList;
         }

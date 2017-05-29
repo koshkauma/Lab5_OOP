@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using lab_3.Classes;
 using lab_3.Classes.ForEyes;
+using lab_3.Helpers;
 
 namespace lab_3.Factories.EyesFactories
 {
@@ -25,17 +26,17 @@ namespace lab_3.Factories.EyesFactories
         {
             List<Control> resultList = base.GetListControl(size, leftCoord);
 
-            resultList.Add(GetLabel("mascaraEffect", "Заявленный эффект", size, new Point(leftCoord, 260), 11));
-            resultList.Add(GetTextBox("mascaraEffect", size, new Point(leftCoord, 280), 12, TextBoxString_KeyPress));
+            resultList.Add(ComponentCreatorHelper.GetLabel("mascaraEffect", "Заявленный эффект", size, new Point(leftCoord, 260), 11));
+            resultList.Add(ComponentCreatorHelper.GetTextBox("mascaraEffect", size, new Point(leftCoord, 280), 12, ComponentCreatorHelper.TextBoxString_KeyPress));
 
             List<string> values = EnumHelper<Mascara.MaterialOfBrush>.GetEnumValues();
             List<string> names = EnumHelper<Mascara.MaterialOfBrush>.GetAllDescriptions();
-            resultList.Add(GetLabel("materialOfBrush", "Материал щеточки", size, new Point(leftCoord, 305), 13));
+            resultList.Add(ComponentCreatorHelper.GetLabel("materialOfBrush", "Материал щеточки", size, new Point(leftCoord, 305), 13));
             resultList.Add(GetComboBox("materialOfBrush", size, new Point(leftCoord, 325), 14, names, values));
 
             values = EnumHelper<Mascara.FormOfBrush>.GetEnumValues();
             names = EnumHelper<Mascara.FormOfBrush>.GetAllDescriptions();
-            resultList.Add(GetLabel("formOfBrush", "Форма щеточки", size, new Point(leftCoord, 355), 15));
+            resultList.Add(ComponentCreatorHelper.GetLabel("formOfBrush", "Форма щеточки", size, new Point(leftCoord, 355), 15));
             resultList.Add(GetComboBox("formOfBrush", size, new Point(leftCoord, 375), 16, names, values));
 
             return resultList;

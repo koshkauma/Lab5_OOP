@@ -27,14 +27,14 @@ namespace XorEncryption
         public override List<Control> GetControls(Size size)
         {
             List<Control> result = new List<Control>();
-            result.Add(ComponentCreatorHelper.GetLabel("key", "Введите ключ", size, new Point(10, 20)));
-            result.Add(ComponentCreatorHelper.GetTextBox("keyText", size, new Point(10, 40), null));
-            result.Add(ComponentCreatorHelper.GetButton("loadKey", "Загрузить ключ из файла", new Size(120, 35), new Point(10, 70), ButtonLoadKey_Click));
-            result.Add(ComponentCreatorHelper.GetCheckBox("saveKey", "Сохранить ключ при сохранении файла?", new Size(200, 45), new Point(10, 105)));
+            result.Add(ComponentCreatorHelper.GetLabel("key", "Введите ключ", size, new Point(10, 20), 1));
+            result.Add(ComponentCreatorHelper.GetTextBox("keyText", size, new Point(10, 40), 2, null));
+            result.Add(ComponentCreatorHelper.GetButton("loadKey", "Загрузить ключ из файла", new Size(120, 35), new Point(10, 70), ButtonLoadKey_Click, 3));
+            result.Add(ComponentCreatorHelper.GetCheckBox("saveKey", "Сохранить ключ при сохранении файла?", new Size(200, 45), new Point(10, 105), 4));
             return result;
         }
 
-        public override bool CheckFiels(Control.ControlCollection controls)
+        public override bool CheckFields(Control.ControlCollection controls)
         {
             if (!ComponentCreatorHelper.CheckTextBoxes(controls))
             {

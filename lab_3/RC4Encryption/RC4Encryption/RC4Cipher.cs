@@ -11,7 +11,7 @@ namespace RC4Encryption
 {
     public class RC4Cipher
     {
-        byte[] keyStream = new byte[256];
+        byte[] keyStream; //keySize
         private int x = 0;
         private int y = 0;
 
@@ -24,8 +24,9 @@ namespace RC4Encryption
         private void Init(byte[] key)
         {
             int keyLength = key.Length;
+            
 
-            for (int i = 0; i < KeySize; i++)
+            for (int i = 0; i < keyStream.Length; i++)
             {
                 keyStream[i] = (byte)i;
             }
@@ -44,6 +45,7 @@ namespace RC4Encryption
         {
             KeySize = keySize;
             Key = key;
+            keyStream = new byte[keySize];
             byte[] keyBytes = Encoding.Default.GetBytes(Key);
             Init(keyBytes);
             FileToReadPath = fileToReadPath;

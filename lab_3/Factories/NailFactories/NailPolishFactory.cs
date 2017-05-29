@@ -4,7 +4,7 @@ using System.Drawing;
 using lab_3.Classes;
 using lab_3.Classes.ForNails;
 using System;
-
+using lab_3.Helpers;
 
 namespace lab_3.Factories.NailFactories
 {
@@ -24,12 +24,12 @@ namespace lab_3.Factories.NailFactories
         {
             List<Control> resultList = base.GetListControl(size, leftCoord);
          
-            resultList.Add(GetLabel("durability", "Заявленное кол-во дней носки", size, new Point(leftCoord, 215), 9));
-            resultList.Add(GetTextBox("durability", size, new Point(leftCoord, 235), 10, TextBoxDigits_KeyPress));
+            resultList.Add(ComponentCreatorHelper.GetLabel("durability", "Заявленное кол-во дней носки", size, new Point(leftCoord, 215), 9));
+            resultList.Add(ComponentCreatorHelper.GetTextBox("durability", size, new Point(leftCoord, 235), 10, ComponentCreatorHelper.TextBoxDigits_KeyPress));
 
             List<string> values = EnumHelper<NailPolish.TypesOfEffects>.GetEnumValues();
             List<string> namesOfEffects = EnumHelper<NailPolish.TypesOfEffects>.GetAllDescriptions();
-            resultList.Add(GetLabel("effect", "Специальный эффект лака", size, new Point(leftCoord, 260), 11));
+            resultList.Add(ComponentCreatorHelper.GetLabel("effect", "Специальный эффект лака", size, new Point(leftCoord, 260), 11));
             resultList.Add(GetComboBox("effect", size, new Point(leftCoord, 280), 12, namesOfEffects, values));
 
             return resultList;

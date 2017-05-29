@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using lab_3.Classes;
+using lab_3.Helpers;
 using lab_3.Classes.ForLips;
 
 namespace lab_3.Factories.LipFactories
@@ -15,8 +16,8 @@ namespace lab_3.Factories.LipFactories
         {
             List<Control> resultList = base.GetListControl(size, leftCoord);
 
-            resultList.Add(GetLabel("aromatizer", "Отдушка", size, new Point(leftCoord, 215), 9));
-            resultList.Add(GetTextBox("aromatizer", size, new Point(leftCoord, 235), 10, TextBoxString_KeyPress));
+            resultList.Add(ComponentCreatorHelper.GetLabel("aromatizer", "Отдушка", size, new Point(leftCoord, 215), 9));
+            resultList.Add(ComponentCreatorHelper.GetTextBox("aromatizer", size, new Point(leftCoord, 235), 10, ComponentCreatorHelper.TextBoxString_KeyPress));
 
             return resultList;
         }

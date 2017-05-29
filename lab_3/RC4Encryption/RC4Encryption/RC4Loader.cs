@@ -29,13 +29,13 @@ namespace RC4Encryption
         public override List<Control> GetControls(Size size)
         {
             List<Control> result = new List<Control>();
-            result.Add(ComponentCreatorHelper.GetLabel("key", "Ключевая фраза", size, new Point(10, 20)));
-            result.Add(ComponentCreatorHelper.GetTextBox("keyText", size, new Point(10, 40), null));
-            result.Add(ComponentCreatorHelper.GetButton("loadKey", "Загрузить ключевую фразу из файла", new Size(120, 35), new Point(10, 70), ButtonLoadKey_Click));
-            result.Add(ComponentCreatorHelper.GetButton("loadKey", "Загрузить ключ + длину ключ. потока из файла", new Size(120, 35), new Point(10, 105), ButtonLoadKeyAndKeySize_Click));
-            result.Add(ComponentCreatorHelper.GetCheckBox("saveKey", "Сохранить ключ и длину ключ. последовательности при сохранении файла?", new Size(200, 45), new Point(10, 145)));
-            result.Add(ComponentCreatorHelper.GetLabel("keySize", "Длина ключевой последовательности", new Size(120, 35), new Point(10, 190)));
-            result.Add(ComponentCreatorHelper.GetTextBox("keySizeTextBox", size, new Point(10, 225), ComponentCreatorHelper.TextBoxDigits_KeyPress));
+            result.Add(ComponentCreatorHelper.GetLabel("key", "Ключевая фраза", size, new Point(10, 20), 1));
+            result.Add(ComponentCreatorHelper.GetTextBox("keyText", size, new Point(10, 40), 2, null));
+            result.Add(ComponentCreatorHelper.GetButton("loadKey", "Загрузить ключевую фразу из файла", new Size(120, 35), new Point(10, 70), ButtonLoadKey_Click, 3));
+            result.Add(ComponentCreatorHelper.GetButton("loadKey", "Загрузить ключ + длину ключ. потока из файла", new Size(120, 35), new Point(10, 105), ButtonLoadKeyAndKeySize_Click, 4));
+            result.Add(ComponentCreatorHelper.GetCheckBox("saveKey", "Сохранить ключ и длину ключ. последовательности при сохранении файла?", new Size(200, 45), new Point(10, 145), 5));
+            result.Add(ComponentCreatorHelper.GetLabel("keySize", "Длина ключевой последовательности", new Size(120, 35), new Point(10, 190), 6));
+            result.Add(ComponentCreatorHelper.GetTextBox("keySizeTextBox", size, new Point(10, 225), 7, ComponentCreatorHelper.TextBoxDigits_KeyPress));
             return result;
         }
 
@@ -55,16 +55,16 @@ namespace RC4Encryption
                         keyWord = reader.ReadLine();
                         size = Int32.Parse(reader.ReadLine());
                     }
+                    Button button = (Button)sender;
+                    Control panel = button.Parent;
+                    Control.ControlCollection currentControls = panel.Controls;
+                    currentControls[KeyTextIndex].Text = keyWord;
+                    currentControls[keySizeIndex].Text = size.ToString();
                 }
                 catch
                 {
-                    throw new Exception("Не удалось прочитать ключ из файла!");
+                    MessageBox.Show("Не удалось прочитать ключ из файла!");
                 }
-                Button button = (Button)sender;
-                Control panel = button.Parent;
-                Control.ControlCollection currentControls = panel.Controls;
-                currentControls[KeyTextIndex].Text = keyWord;
-                currentControls[keySizeIndex].Text = size.ToString();
             }
         }
 
@@ -89,7 +89,7 @@ namespace RC4Encryption
             }
         }
 
-        public override bool CheckFiels(Control.ControlCollection controls)
+        public override bool CheckFields(Control.ControlCollection controls)
         {
             if (!ComponentCreatorHelper.CheckTextBoxes(controls))
             {

@@ -56,10 +56,9 @@
             // 
             // buttonDelete
             // 
-            this.buttonDelete.Location = new System.Drawing.Point(828, 716);
-            this.buttonDelete.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonDelete.Location = new System.Drawing.Point(621, 582);
             this.buttonDelete.Name = "buttonDelete";
-            this.buttonDelete.Size = new System.Drawing.Size(100, 28);
+            this.buttonDelete.Size = new System.Drawing.Size(75, 23);
             this.buttonDelete.TabIndex = 1;
             this.buttonDelete.Text = "Удалить";
             this.buttonDelete.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -69,18 +68,16 @@
             // panelAdd
             // 
             this.panelAdd.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.panelAdd.Location = new System.Drawing.Point(39, 98);
-            this.panelAdd.Margin = new System.Windows.Forms.Padding(4);
+            this.panelAdd.Location = new System.Drawing.Point(29, 80);
             this.panelAdd.Name = "panelAdd";
-            this.panelAdd.Size = new System.Drawing.Size(349, 612);
+            this.panelAdd.Size = new System.Drawing.Size(262, 497);
             this.panelAdd.TabIndex = 3;
             // 
             // buttonAdd
             // 
-            this.buttonAdd.Location = new System.Drawing.Point(164, 718);
-            this.buttonAdd.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonAdd.Location = new System.Drawing.Point(123, 583);
             this.buttonAdd.Name = "buttonAdd";
-            this.buttonAdd.Size = new System.Drawing.Size(100, 28);
+            this.buttonAdd.Size = new System.Drawing.Size(75, 23);
             this.buttonAdd.TabIndex = 4;
             this.buttonAdd.Text = "Добавить";
             this.buttonAdd.UseVisualStyleBackColor = true;
@@ -88,10 +85,9 @@
             // 
             // buttonEdit
             // 
-            this.buttonEdit.Location = new System.Drawing.Point(547, 718);
-            this.buttonEdit.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonEdit.Location = new System.Drawing.Point(410, 583);
             this.buttonEdit.Name = "buttonEdit";
-            this.buttonEdit.Size = new System.Drawing.Size(123, 28);
+            this.buttonEdit.Size = new System.Drawing.Size(92, 23);
             this.buttonEdit.TabIndex = 5;
             this.buttonEdit.Text = "Редактировать";
             this.buttonEdit.UseVisualStyleBackColor = true;
@@ -102,40 +98,35 @@
             this.comboBoxItems.BackColor = System.Drawing.SystemColors.Window;
             this.comboBoxItems.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxItems.FormattingEnabled = true;
-            this.comboBoxItems.Location = new System.Drawing.Point(39, 42);
-            this.comboBoxItems.Margin = new System.Windows.Forms.Padding(4);
+            this.comboBoxItems.Location = new System.Drawing.Point(29, 34);
             this.comboBoxItems.Name = "comboBoxItems";
-            this.comboBoxItems.Size = new System.Drawing.Size(348, 24);
+            this.comboBoxItems.Size = new System.Drawing.Size(262, 21);
             this.comboBoxItems.TabIndex = 6;
             this.comboBoxItems.SelectedIndexChanged += new System.EventHandler(this.comboBoxItems_SelectedIndexChanged);
             // 
             // panelEdit
             // 
             this.panelEdit.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.panelEdit.Location = new System.Drawing.Point(437, 98);
-            this.panelEdit.Margin = new System.Windows.Forms.Padding(4);
+            this.panelEdit.Location = new System.Drawing.Point(328, 80);
             this.panelEdit.Name = "panelEdit";
-            this.panelEdit.Size = new System.Drawing.Size(341, 612);
+            this.panelEdit.Size = new System.Drawing.Size(256, 497);
             this.panelEdit.TabIndex = 7;
             // 
             // listBoxOfProducts
             // 
             this.listBoxOfProducts.FormattingEnabled = true;
-            this.listBoxOfProducts.ItemHeight = 16;
-            this.listBoxOfProducts.Location = new System.Drawing.Point(828, 97);
-            this.listBoxOfProducts.Margin = new System.Windows.Forms.Padding(4);
+            this.listBoxOfProducts.Location = new System.Drawing.Point(621, 79);
             this.listBoxOfProducts.Name = "listBoxOfProducts";
-            this.listBoxOfProducts.Size = new System.Drawing.Size(223, 612);
+            this.listBoxOfProducts.Size = new System.Drawing.Size(168, 498);
             this.listBoxOfProducts.TabIndex = 8;
             this.listBoxOfProducts.SelectedIndexChanged += new System.EventHandler(this.listBoxOfProducts_SelectedIndexChanged);
             // 
             // labelEdit
             // 
             this.labelEdit.AutoSize = true;
-            this.labelEdit.Location = new System.Drawing.Point(543, 42);
-            this.labelEdit.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelEdit.Location = new System.Drawing.Point(407, 34);
             this.labelEdit.Name = "labelEdit";
-            this.labelEdit.Size = new System.Drawing.Size(0, 17);
+            this.labelEdit.Size = new System.Drawing.Size(0, 13);
             this.labelEdit.TabIndex = 9;
             // 
             // menuStripFile
@@ -146,8 +137,7 @@
             this.выходToolStripMenuItem});
             this.menuStripFile.Location = new System.Drawing.Point(0, 0);
             this.menuStripFile.Name = "menuStripFile";
-            this.menuStripFile.Padding = new System.Windows.Forms.Padding(8, 2, 0, 2);
-            this.menuStripFile.Size = new System.Drawing.Size(1463, 28);
+            this.menuStripFile.Size = new System.Drawing.Size(1097, 24);
             this.menuStripFile.TabIndex = 10;
             // 
             // работаСФайломToolStripMenuItem
@@ -156,27 +146,27 @@
             this.сериализоватьToolStripMenuItem,
             this.десToolStripMenuItem});
             this.работаСФайломToolStripMenuItem.Name = "работаСФайломToolStripMenuItem";
-            this.работаСФайломToolStripMenuItem.Size = new System.Drawing.Size(139, 24);
+            this.работаСФайломToolStripMenuItem.Size = new System.Drawing.Size(110, 20);
             this.работаСФайломToolStripMenuItem.Text = "Работа с файлом";
             // 
             // сериализоватьToolStripMenuItem
             // 
             this.сериализоватьToolStripMenuItem.Name = "сериализоватьToolStripMenuItem";
-            this.сериализоватьToolStripMenuItem.Size = new System.Drawing.Size(206, 26);
+            this.сериализоватьToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
             this.сериализоватьToolStripMenuItem.Text = "Сериализовать";
             this.сериализоватьToolStripMenuItem.Click += new System.EventHandler(this.serializeToolStripMenuItem_Click);
             // 
             // десToolStripMenuItem
             // 
             this.десToolStripMenuItem.Name = "десToolStripMenuItem";
-            this.десToolStripMenuItem.Size = new System.Drawing.Size(206, 26);
+            this.десToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
             this.десToolStripMenuItem.Text = "Десериализовать";
             this.десToolStripMenuItem.Click += new System.EventHandler(this.deserializeToolStripMenuItem_Click);
             // 
             // выходToolStripMenuItem
             // 
             this.выходToolStripMenuItem.Name = "выходToolStripMenuItem";
-            this.выходToolStripMenuItem.Size = new System.Drawing.Size(65, 24);
+            this.выходToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
             this.выходToolStripMenuItem.Text = "Выход";
             this.выходToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -190,11 +180,10 @@
             // 
             // buttonClearList
             // 
-            this.buttonClearList.Location = new System.Drawing.Point(952, 716);
-            this.buttonClearList.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonClearList.Location = new System.Drawing.Point(714, 582);
             this.buttonClearList.Name = "buttonClearList";
             this.buttonClearList.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.buttonClearList.Size = new System.Drawing.Size(100, 28);
+            this.buttonClearList.Size = new System.Drawing.Size(75, 23);
             this.buttonClearList.TabIndex = 11;
             this.buttonClearList.Text = "Очистить";
             this.buttonClearList.UseVisualStyleBackColor = true;
@@ -202,10 +191,9 @@
             // 
             // buttonLoadPlugin
             // 
-            this.buttonLoadPlugin.Location = new System.Drawing.Point(1145, 98);
-            this.buttonLoadPlugin.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonLoadPlugin.Location = new System.Drawing.Point(859, 80);
             this.buttonLoadPlugin.Name = "buttonLoadPlugin";
-            this.buttonLoadPlugin.Size = new System.Drawing.Size(224, 28);
+            this.buttonLoadPlugin.Size = new System.Drawing.Size(168, 23);
             this.buttonLoadPlugin.TabIndex = 12;
             this.buttonLoadPlugin.Text = "Расширить иерархию";
             this.buttonLoadPlugin.UseVisualStyleBackColor = true;
@@ -213,10 +201,9 @@
             // 
             // buttonSignPlugin
             // 
-            this.buttonSignPlugin.Location = new System.Drawing.Point(1145, 190);
-            this.buttonSignPlugin.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonSignPlugin.Location = new System.Drawing.Point(859, 154);
             this.buttonSignPlugin.Name = "buttonSignPlugin";
-            this.buttonSignPlugin.Size = new System.Drawing.Size(224, 28);
+            this.buttonSignPlugin.Size = new System.Drawing.Size(168, 23);
             this.buttonSignPlugin.TabIndex = 14;
             this.buttonSignPlugin.Text = "Подписать плагин";
             this.buttonSignPlugin.UseVisualStyleBackColor = true;
@@ -224,10 +211,9 @@
             // 
             // buttonFuncPlugin
             // 
-            this.buttonFuncPlugin.Location = new System.Drawing.Point(1145, 134);
-            this.buttonFuncPlugin.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonFuncPlugin.Location = new System.Drawing.Point(859, 109);
             this.buttonFuncPlugin.Name = "buttonFuncPlugin";
-            this.buttonFuncPlugin.Size = new System.Drawing.Size(224, 48);
+            this.buttonFuncPlugin.Size = new System.Drawing.Size(168, 39);
             this.buttonFuncPlugin.TabIndex = 15;
             this.buttonFuncPlugin.Text = "Загрузить функциональный плагин";
             this.buttonFuncPlugin.UseVisualStyleBackColor = true;
@@ -236,29 +222,26 @@
             // panelCrypto
             // 
             this.panelCrypto.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.panelCrypto.Location = new System.Drawing.Point(1103, 280);
-            this.panelCrypto.Margin = new System.Windows.Forms.Padding(4);
+            this.panelCrypto.Location = new System.Drawing.Point(827, 228);
             this.panelCrypto.Name = "panelCrypto";
-            this.panelCrypto.Size = new System.Drawing.Size(319, 430);
+            this.panelCrypto.Size = new System.Drawing.Size(239, 349);
             this.panelCrypto.TabIndex = 16;
             // 
             // dllComboBox
             // 
             this.dllComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.dllComboBox.FormattingEnabled = true;
-            this.dllComboBox.Location = new System.Drawing.Point(1124, 236);
-            this.dllComboBox.Margin = new System.Windows.Forms.Padding(4);
+            this.dllComboBox.Location = new System.Drawing.Point(843, 192);
             this.dllComboBox.Name = "dllComboBox";
-            this.dllComboBox.Size = new System.Drawing.Size(279, 24);
+            this.dllComboBox.Size = new System.Drawing.Size(210, 21);
             this.dllComboBox.TabIndex = 17;
             this.dllComboBox.SelectedIndexChanged += new System.EventHandler(this.dllComboBox_SelectedIndexChanged_1);
             // 
             // buttonEncrypt
             // 
-            this.buttonEncrypt.Location = new System.Drawing.Point(1103, 716);
-            this.buttonEncrypt.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonEncrypt.Location = new System.Drawing.Point(827, 582);
             this.buttonEncrypt.Name = "buttonEncrypt";
-            this.buttonEncrypt.Size = new System.Drawing.Size(152, 54);
+            this.buttonEncrypt.Size = new System.Drawing.Size(114, 44);
             this.buttonEncrypt.TabIndex = 18;
             this.buttonEncrypt.Text = "Зашифровать и сохранить";
             this.buttonEncrypt.UseVisualStyleBackColor = true;
@@ -266,10 +249,9 @@
             // 
             // buttonDecrypt
             // 
-            this.buttonDecrypt.Location = new System.Drawing.Point(1263, 718);
-            this.buttonDecrypt.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonDecrypt.Location = new System.Drawing.Point(947, 583);
             this.buttonDecrypt.Name = "buttonDecrypt";
-            this.buttonDecrypt.Size = new System.Drawing.Size(159, 54);
+            this.buttonDecrypt.Size = new System.Drawing.Size(119, 44);
             this.buttonDecrypt.TabIndex = 19;
             this.buttonDecrypt.Text = "Расшифровать и загрузить";
             this.buttonDecrypt.UseVisualStyleBackColor = true;
@@ -277,9 +259,9 @@
             // 
             // serializeForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1463, 785);
+            this.ClientSize = new System.Drawing.Size(1097, 638);
             this.Controls.Add(this.buttonDecrypt);
             this.Controls.Add(this.buttonEncrypt);
             this.Controls.Add(this.dllComboBox);
@@ -298,7 +280,6 @@
             this.Controls.Add(this.buttonDelete);
             this.Controls.Add(this.menuStripFile);
             this.MainMenuStrip = this.menuStripFile;
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "serializeForm";
             this.Text = "Лаб. работа №3";
             this.menuStripFile.ResumeLayout(false);

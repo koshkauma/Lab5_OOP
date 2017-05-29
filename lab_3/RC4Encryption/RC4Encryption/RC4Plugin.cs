@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 using lab_3.Crypto;
 namespace RC4Encryption
 {
-    public class RC4Plugin: ICryptoPlugin;
+    public class RC4Plugin: ICryptoPlugin
     {
         public CryptoLoader GetCryptoLoader()
         {
-            return new XorCipherLoader();
+            return new RC4Loader();
         }
 
         public string GetBasicExtension()
         {
-            return XorCipherLoader.xorExt;
+            return RC4Loader.RC4Ext;
         }
     }
 }

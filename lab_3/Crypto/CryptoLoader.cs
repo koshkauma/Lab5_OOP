@@ -12,49 +12,6 @@ namespace lab_3.Crypto
         const int backspaceCode = 8;
 
         public abstract object GetAlgorithmName();
-       
-
-        public TextBox GetTextBox(string name, Size size, Point location,
-            KeyPressEventHandler keyPressEvent)
-        {
-            TextBox textboxToCreate = new TextBox();
-            textboxToCreate.Location = location;
-            textboxToCreate.Name = name;
-            textboxToCreate.KeyPress += keyPressEvent;
-            return textboxToCreate;
-        }
-
-        public Label GetLabel(string name, string text, Size size, Point location)
-        {
-            Label labelToCreate = new Label();
-            labelToCreate.Location = location;
-            labelToCreate.Name = name;
-            labelToCreate.Text = text;
-            labelToCreate.Size = size;
-            labelToCreate.BackColor = Color.Transparent;
-            return labelToCreate;
-        }
-
-        public void TextBoxString_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if ((e.KeyChar != backspaceCode) && (e.KeyChar != ' ') && !Char.IsLetterOrDigit(e.KeyChar))
-            {
-                e.Handled = true;
-            }
-        } 
-
-
-        public Button GetButton(string name, string text, Size size, Point location, EventHandler buttonClick)
-        {
-            Button buttonToCreate = new Button();
-            buttonToCreate.Name = name;
-            buttonToCreate.Text = text;
-            buttonToCreate.Size = size;
-            buttonToCreate.Location = location;
-            buttonToCreate.Click += buttonClick;
-            return buttonToCreate;
-        }
-
         
         public void ButtonLoadKey_Click(object sender, EventArgs e)
         {
@@ -83,22 +40,9 @@ namespace lab_3.Crypto
             }
         }
 
-
-        public CheckBox GetCheckBox(string name, string text, Size size, Point location)
-        {
-            CheckBox result = new CheckBox();
-            result.Name = name;
-            result.Text = text;
-            result.Size = size;
-            result.Location = location;
-            result.Checked = true;
-            return result;
-        }
-
         public TextBox GetKeyTextBox(Control panel)
         {
             Control.ControlCollection currentControls = panel.Controls;
-            int i = 0;
             foreach(Control controlItem in currentControls)
             {
                 if (controlItem is TextBox && controlItem.Name == "keyText")
@@ -113,7 +57,7 @@ namespace lab_3.Crypto
 
         public abstract List<Control> GetControls(Size size);
 
-
+        public abstract bool CheckFiels(Control.ControlCollection controls);
         public abstract void EncryptFile(Control.ControlCollection controls, string sourcePath);
         public abstract string DecryptFile(Control.ControlCollection controls, string sourcePath);
 

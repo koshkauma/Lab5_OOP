@@ -12,6 +12,7 @@ using System.Security.Cryptography;
 using System.IO;
 using lab_3.Crypto;
 
+
 namespace lab_3
 {
     public partial class serializeForm : Form
@@ -48,7 +49,7 @@ namespace lab_3
         private void buttonAdd_Click(object sender, EventArgs e)
         {
             CosmeticProduct temp = (CosmeticProduct)panelAdd.Tag;
-            if (factoryFormEditor.FactoryList[temp.ClassIndex].CheckTextBoxes(panelAdd.Controls))
+            if (ComponentCreatorHelper.CheckTextBoxes(panelAdd.Controls))
             {
                 try
                 {
@@ -230,48 +231,44 @@ namespace lab_3
         }
 
 
+        //Plugins dllList = new Plugins();
         Plugins dllList = new Plugins();
+        
         //string will be our extension 
         Dictionary<string, int> pluginsExtensions = new Dictionary<string, int>();
-    
+
+
+        private void InitCryptoComponents()
+        {
+            panelCrypto.Visible = true;
+            buttonDecrypt.Visible = true;
+            buttonEncrypt.Visible = true;
+            dllComboBox.SelectedIndex = 0;
+        }
 
         private void buttonFuncPlugin_Click(object sender, EventArgs e)
         {
-            OpenFileDialog dlg = new OpenFileDialog()
+            OpenFileDialog pluginLoader = new OpenFileDialog();
+            pluginLoader.Filter = "DLL files | *.dll";
+            pluginLoader.Multiselect = true;
+            if (pluginLoader.ShowDialog() == DialogResult.OK)
             {
-                Filter = "DLL files | *.dll"
-            };
-            if (dlg.ShowDialog() == DialogResult.OK)
-            {
-                Assembly assembly = Assembly.LoadFrom(dlg.FileName);
-                List<Type> pluginTypes = GetTypes<ICryptoPlugin>(assembly);
-
-                if (pluginTypes.Count != 0)
-                {
-                    for (int i = 0; i < pluginTypes.Count; i++)
-                    {
-
-                        ICryptoPlugin plugin = Activator.CreateInstance(pluginTypes[i]) as ICryptoPlugin;
-                        //adding plugin to list of plugins
-                        dllList.ListOfPlugins.Add(plugin.GetCryptoLoader());
-                        //adding to dictionary our extension and index at list
-                        pluginsExtensions.Add(plugin.GetBasicExtension(), i);
-
-                        dllComboBox.Items.Add(dllList.ListOfPlugins[i].GetAlgorithmName());
-                      //  panelCrypto.Controls.AddRange(dllList.ListOfPlugins[i].GetControls(new Size(100, 20)).ToArray());
-                    }
-
-                   
-                }
+                LoadingOfPlugin.LoadFuncPlugins(pluginLoader.FileNames, dllList, pluginsExtensions, dllComboBox);
             }
+            if (dllList.ListOfPlugins.Count != 0)
+            {
+                InitCryptoComponents();
             }
 
+        }
+            
 
         private void dllComboBox_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             panelCrypto.Controls.Clear();
-            panelCrypto.Controls.AddRange(dllList.ListOfPlugins[dllComboBox.SelectedIndex].GetControls(new Size(100, 20)).ToArray());
+            panelCrypto.Controls.AddRange(dllList.ListOfPlugins[dllComboBox.SelectedIndex].GetCryptoLoader().GetControls(new Size(100, 20)).ToArray());
         }
+        
 
         private void buttonDecrypt_Click_1(object sender, EventArgs e)
         {
@@ -296,10 +293,9 @@ namespace lab_3
   
                     if (currentIndexOfUsedPlugin == indexOfPluginForExt)
                     {
-                        string fileToLoad = dllList.ListOfPlugins[0].DecryptFile(panelCrypto.Controls, inputFilePath);
+                        string fileToLoad = dllList.ListOfPlugins[dllComboBox.SelectedIndex].GetCryptoLoader().DecryptFile(panelCrypto.Controls, inputFilePath);
                         try
                         {
-                            MessageBox.Show(fileToLoad);
                             list.DeserializeItemsInList(fileToLoad, factoryFormEditor);
                         }
                         catch (Exception exception)
@@ -314,7 +310,7 @@ namespace lab_3
                         //if no, we load controls panel for needed alg. 
                         dllComboBox.SelectedIndex = indexOfPluginForExt;
                         //letting the user know
-                        MessageBox.Show("Заполните поля для дешифрования файла с расширением!" + cryptoFileExt);
+                        MessageBox.Show("Заполните поля для дешифрования файла с расширением " + cryptoFileExt);
                     }
 
                 }
@@ -336,24 +332,29 @@ namespace lab_3
             if (dllList.ListOfPlugins.Count != 0)
             {
                 //////
-                if (listBoxOfProducts.Items.Count == 0)
+                if (dllList.ListOfPlugins[dllComboBox.SelectedIndex].GetCryptoLoader().CheckFiels(panelCrypto.Controls))
                 {
-                    MessageBox.Show("В списке ничего нет!");
-                }
-                else
-                {
-                    if (saveFileDialog.ShowDialog() != DialogResult.Cancel)
+                    if (listBoxOfProducts.Items.Count == 0)
                     {
-                        list.SerializeItemsInList(saveFileDialog.FileName);
-                        dllList.ListOfPlugins[0].EncryptFile(panelCrypto.Controls, saveFileDialog.FileName);
-                        File.Delete(saveFileDialog.FileName);
+                        MessageBox.Show("В списке ничего нет!");
+                    }
+                    else
+                    {
+                        if (saveFileDialog.ShowDialog() != DialogResult.Cancel)
+                        {
+                            list.SerializeItemsInList(saveFileDialog.FileName);
+                            dllList.ListOfPlugins[dllComboBox.SelectedIndex].GetCryptoLoader().EncryptFile(panelCrypto.Controls, saveFileDialog.FileName);
+                            File.Delete(saveFileDialog.FileName);
+                        }
                     }
                 }
-
+              
                 /////
 
             }
         }
+
+
     }
     }
     

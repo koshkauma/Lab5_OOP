@@ -185,24 +185,7 @@ namespace lab_3.Factories
             controlList[colorButtonIndex].BackColor = currentProduct.Color;
         }
         
-        public virtual bool CheckTextBoxes(Control.ControlCollection controlList)
-        {
-            bool result = true;
-            int i = 0;
-            while (result && i < controlList.Count)
-            {
-                if (controlList[i] is TextBox)
-                {
-                    if (controlList[i].Text == "")
-                    {
-                        result = false;
-                        break;
-                    }
-                }
-                i++;
-            }
-            return result;
-        }
+    
 
     }
 }

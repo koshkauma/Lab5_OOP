@@ -7,8 +7,8 @@ namespace lab_3.Crypto
 {
     public class Plugins
     {
-        private List<CryptoLoader> listOfPlugins;
-        public List<CryptoLoader> ListOfPlugins
+        private List<ICryptoPlugin> listOfPlugins;
+        public List<ICryptoPlugin> ListOfPlugins
         {
             get
             {
@@ -21,16 +21,18 @@ namespace lab_3.Crypto
 
         public Plugins()
         {
-            listOfPlugins = new List<CryptoLoader>();   
+            listOfPlugins = new List<ICryptoPlugin>();   
         }
 
-      /*  public bool CheckIfAlreadyInList(CosmeticFactory someFormLoader)
+
+        //вынести как generic
+        public bool CheckIfUnique(ICryptoPlugin plugin)
         {
             bool duplicateFound = false;
             int i = 0;
-            while (!duplicateFound && i < factoryList.Count)
+            while (!duplicateFound && i < listOfPlugins.Count)
             {
-                if (factoryList[i].GetType().ToString() == someFormLoader.GetType().ToString())
+                if (listOfPlugins[i].GetType().ToString() == plugin.GetType().ToString())
                 {
                     duplicateFound = true;
                 }
@@ -39,17 +41,18 @@ namespace lab_3.Crypto
             return duplicateFound;
         }
 
-        public void AddProduct(CosmeticFactory someFormLoader)
+        public bool IsAddedToList(ICryptoPlugin somePlugin)
         {
-            if (!CheckIfAlreadyInList(someFormLoader))
+            if (!CheckIfUnique(somePlugin))
             {
-                FactoryList.Add(someFormLoader);
+                ListOfPlugins.Add(somePlugin);
+                return true;
             }
             else
             {
-                MessageBox.Show(someFormLoader.GetClassName() + " - " + "Данный продукт уже существует!");
+                return false;
             }
-        }*/
+        }
 
     }
 }

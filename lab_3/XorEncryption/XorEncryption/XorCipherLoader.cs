@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Drawing;
 using lab_3.Crypto;
+using lab_3.Helpers;
 
 namespace XorEncryption
 {
@@ -26,13 +27,29 @@ namespace XorEncryption
         public override List<Control> GetControls(Size size)
         {
             List<Control> result = new List<Control>();
-            result.Add(GetLabel("key", "Введите ключ", size, new Point(10, 20)));
-            result.Add(GetTextBox("keyText", size, new Point(10, 40), null));
-            result.Add(GetButton("loadKey", "Загрузить ключ из файла", new Size(120, 35), new Point(10, 70), ButtonLoadKey_Click));
-            result.Add(GetCheckBox("saveKey", "Сохранить ключ при сохранении файла?", new Size(200, 45), new Point(10, 105)));
+            result.Add(ComponentCreatorHelper.GetLabel("key", "Введите ключ", size, new Point(10, 20)));
+            result.Add(ComponentCreatorHelper.GetTextBox("keyText", size, new Point(10, 40), null));
+            result.Add(ComponentCreatorHelper.GetButton("loadKey", "Загрузить ключ из файла", new Size(120, 35), new Point(10, 70), ButtonLoadKey_Click));
+            result.Add(ComponentCreatorHelper.GetCheckBox("saveKey", "Сохранить ключ при сохранении файла?", new Size(200, 45), new Point(10, 105)));
             return result;
         }
 
+        public override bool CheckFiels(Control.ControlCollection controls)
+        {
+            if (!ComponentCreatorHelper.CheckTextBoxes(controls))
+            {
+                MessageBox.Show("Заполните все поля!");
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+         
+       
+
+      
         public override void EncryptFile(Control.ControlCollection controls, string sourcePath)
         {
 

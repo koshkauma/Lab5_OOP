@@ -12,9 +12,10 @@ namespace RC4Encryption
     public class RC4Cipher
     {
         byte[] keyStream = new byte[256];
-        int x = 0;
-        int y = 0;
+        private int x = 0;
+        private int y = 0;
 
+        private int KeySize { get; set; }
         private string Key { get; set; }
         private string FileToReadPath { get; set; }
 
@@ -24,28 +25,76 @@ namespace RC4Encryption
         {
             int keyLength = key.Length;
 
-            for (int i = 0; i < 256; i++)
+            for (int i = 0; i < KeySize; i++)
             {
                 keyStream[i] = (byte)i;
             }
 
             int j = 0;
-            for (int i = 0; i < 256; i++)
+            for (int i = 0; i < KeySize; i++)
             {
-                j = (j + keyStream[i] + key[i % keyLength]) % 256;
+                j = (j + keyStream[i] + key[i % keyLength]) % KeySize;
                 keyStream.Swap(i, j);
             }
         }
 
-       
 
-        public RC4Cipher(string key, string fileToReadPath)
+
+        public RC4Cipher(string key, string fileToReadPath, int keySize)
         {
+            KeySize = keySize;
             Key = key;
             byte[] keyBytes = Encoding.Default.GetBytes(Key);
             Init(keyBytes);
             FileToReadPath = fileToReadPath;
         }
+
+        private byte keyItem()
+        {
+            x = (x + 1) % KeySize;
+            y = (y + keyStream[x]) % KeySize;
+
+            keyStream.Swap(x, y);
+
+            return keyStream[(keyStream[x] + keyStream[y]) % KeySize];
+        }
+
+
+        //encrypting
+        public byte[] Encode(byte[] dataB, int size)
+        {
+
+            byte[] data = dataB.Take(size).ToArray();
+
+            byte[] cipher = new byte[data.Length];
+
+            for (int m = 0; m < data.Length; m++)
+            {
+                cipher[m] = (byte)(data[m] ^ keyItem());
+            }
+
+            return cipher;
+        }
+
+        public virtual void EncryptFile(string ext)
+        {
+            //read info from file
+            string infoToEncrypt = GetStringFromFile(FileToReadPath);
+            byte[] bytesToEncrypt = Encoding.Default.GetBytes(infoToEncrypt);
+
+            byte[] result = new byte[bytesToEncrypt.Length];
+
+            //getting result array of bytes
+            for (int i = 0; i < bytesToEncrypt.Length; i++)
+            {
+                result[i] = (byte)(bytesToEncrypt[i] ^ keyItem());
+            }
+
+            string resultStr = Encoding.Default.GetString(result);
+            string fileWithResult = Path.GetDirectoryName(FileToReadPath) + "\\" + Path.GetFileNameWithoutExtension(FileToReadPath) + ext;
+            WriteResultToFile(fileWithResult, resultStr);
+        }
+
 
         //reading information from "FileToReadPath"
         public string GetStringFromFile(string path)
@@ -77,31 +126,10 @@ namespace RC4Encryption
         {
             string pathOfKey = Path.GetDirectoryName(FileToReadPath) + "\\" + Path.GetFileNameWithoutExtension(FileToReadPath) + keyExt;
             StreamWriter outputFile = new StreamWriter(pathOfKey, false, Encoding.Default);
-            outputFile.Write(Key);
+            outputFile.WriteLine(Key);
+            outputFile.WriteLine(KeySize.ToString());
             outputFile.Flush();
             outputFile.Close();
-        }
-
-
-        public virtual void EncryptFile(string ext)
-        {
-            int keyLength = Key.Length;
-            string infoToEncrypt = GetStringFromFile(FileToReadPath);
-            byte[] bytesToEncrypt = Encoding.Default.GetBytes(infoToEncrypt);
-
-            byte[] keyBytes = Encoding.Default.GetBytes(Key);
-            byte[] result = new byte[bytesToEncrypt.Length];
-
-
-            for (int i = 0; i < bytesToEncrypt.Length; i++)
-            {
-                result[i] = (byte)(bytesToEncrypt[i] ^ keyBytes[i % keyBytes.Length]);
-            }
-
-            string infoToWrite = Encoding.Default.GetString(result);
-
-            string destFilePath = Path.GetDirectoryName(FileToReadPath) + "\\" + Path.GetFileNameWithoutExtension(FileToReadPath) + ext;
-            WriteResultToFile(destFilePath, infoToWrite);
         }
 
 
@@ -109,9 +137,6 @@ namespace RC4Encryption
         {
             EncryptFile(ext);
         }
-
-
-
 
 
     }

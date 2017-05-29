@@ -33,6 +33,12 @@ namespace lab_3
             panelAdd.Tag = factoryFormEditor.FactoryList[comboBoxItems.SelectedIndex].GetSomeCosmeticProduct(comboBoxItems.SelectedIndex);
             listBoxOfProducts.DataSource = list.CosmeticList;
             listBoxOfProducts.DisplayMember = "ProductName";
+
+            dllComboBox.Visible = false;
+            buttonEncrypt.Visible = false;
+            buttonDecrypt.Visible = false;
+            panelCrypto.Visible = false;
+
         }
 
 
@@ -165,44 +171,7 @@ namespace lab_3
 
 
 
-        private void buttonLoadPlugin_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog dlg = new OpenFileDialog();
-            dlg.Multiselect = true;
-            dlg.Filter = "DLL files | *.dll";
-            if (dlg.ShowDialog() != DialogResult.Cancel)
-            {
-                foreach (string pluginPath in dlg.FileNames)
-                {
-                    Signature signatureToCheck = new Signature(pluginPath);
-                    string pluginName = Path.GetFileName(pluginPath);
-                    try
-                    {
-                        if (signatureToCheck.CheckIfValid())
-                        {
-                            LoadingOfPlugin.ProccessLoadingOfPlugins(pluginPath, factoryFormEditor, comboBoxItems);
-                        }
-                        else
-                        {
-                            MessageBox.Show(pluginName + " - " + "Подлинность плагина не установлена!");
-                        }
 
-                    }
-                    catch (BadImageFormatException)
-                    {
-                        MessageBox.Show(pluginName + " - " + "Ошибка загрузки dll");
-                    }
-                   
-                    catch (Exception exception)
-                    {
-                        MessageBox.Show(pluginName + " - " + exception.Message);
-                    }
-
-                }
-            }
-       
-        }
-   
 
 
         private void buttonSignPlugin_Click(object sender, EventArgs e)
@@ -220,17 +189,6 @@ namespace lab_3
 
 
 
-        private static List<Type> GetTypes<T>(Assembly assembly)
-        {
-            if (!typeof(T).IsInterface)
-            {
-                return null;
-            }
-            return assembly.GetTypes().Where(x => x.GetInterface(typeof(T).Name) != null).ToList();
-
-        }
-
-
         //Plugins dllList = new Plugins();
         Plugins dllList = new Plugins();
         
@@ -244,6 +202,7 @@ namespace lab_3
             buttonDecrypt.Visible = true;
             buttonEncrypt.Visible = true;
             dllComboBox.SelectedIndex = 0;
+            dllComboBox.Visible = true;
         }
 
         private void buttonFuncPlugin_Click(object sender, EventArgs e)
@@ -261,7 +220,22 @@ namespace lab_3
             }
 
         }
-            
+
+
+        private void buttonLoadPlugin_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Multiselect = true;
+            dlg.Filter = "DLL files | *.dll";
+            if (dlg.ShowDialog() != DialogResult.Cancel)
+            {
+                LoadingOfPlugin.LoadNewProducts(dlg.FileNames, factoryFormEditor, comboBoxItems);
+            }
+
+
+        }
+
+
 
         private void dllComboBox_SelectedIndexChanged_1(object sender, EventArgs e)
         {
@@ -362,7 +336,5 @@ namespace lab_3
 
 
 //сделать
-//норм переключение между алгоритмами
 //вынести некоторые методы в хелпер
-//лист плагинов и лист фабрик - проверки вынести
 //нормальная загрузка плагинов

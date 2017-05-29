@@ -23,72 +23,71 @@ namespace lab_3.Helpers
 
         }
 
-        public static void ProccessLoadingOfPlugins(string pluginPath, AllProductsFactory factoryFormEditor, ComboBox comboBoxToUse)
+        private static List<T> GetPlugins<T>(string[] arrOfPath) where T: class
         {
-            Assembly assembly = Assembly.LoadFrom(pluginPath);
-            List<Type> pluginTypes = GetTypes<IPlugin>(assembly);
-
-            if (pluginTypes.Count != 0)
+            List<T> result = new List<T>();
+            for (int i = 0; i < arrOfPath.Length; i++)
             {
-                int prevIndex = factoryFormEditor.FactoryList.Count();
-                for (int i = 0; i < pluginTypes.Count; i++)
+                string currentPluginPath = arrOfPath[i];
+                Assembly assembly = Assembly.LoadFrom(currentPluginPath);
+                List<Type> pluginTypes = GetTypes<T>(assembly);
+                if (pluginTypes.Count != 0)
                 {
-
-                    IPlugin plugin = Activator.CreateInstance(pluginTypes[i]) as IPlugin;
-                    factoryFormEditor.AddProduct(plugin.GetFormLoader());
+                    for (int j = 0; j < pluginTypes.Count; j++)
+                    {
+                        T plugin = Activator.CreateInstance(pluginTypes[j]) as T;
+                        result.Add(plugin);
+                    }
                 }
 
-                for (int i = prevIndex; i < factoryFormEditor.FactoryList.Count; i++)
+            }
+            return result;
+        }
+
+        public static void LoadNewProducts(string[] plugins, AllProductsFactory factoryFormEditor, ComboBox comboBoxToUse)
+        {
+
+            string[] validPlugins = GetValidPluginNames(plugins);
+            List<IPlugin> pluginList = GetPlugins<IPlugin>(validPlugins);
+            if (pluginList.Count != 0)
+            {
+                int prevComboBoxIndex = factoryFormEditor.FactoryList.Count();
+                for (int i = 0; i < pluginList.Count(); i++)
                 {
-                    comboBoxToUse.Items.Add(factoryFormEditor.FactoryList[i].GetClassName());
+                    factoryFormEditor.AddProduct(pluginList[i].GetFormLoader());
+                }
+
+                for (int j = prevComboBoxIndex; j < factoryFormEditor.FactoryList.Count; j++)
+                {
+                    comboBoxToUse.Items.Add(factoryFormEditor.FactoryList[j].GetClassName());
                 }
             }
         }
+       
 
 
-        public static void LoadFuncPlugins(string[] pluginNames, Plugins plugins, Dictionary<string, int> dict, ComboBox comboBoxOfAlg)
+        public static string[] GetValidPluginNames(string[] pluginNames)
         {
-            //size of plugin list before this loading
-            int prevCounter = plugins.ListOfPlugins.Count();
-            int amountOfAddedPlugins = 0;
-
+            List<string> result = new List<string>();
             for (int i = 0; i < pluginNames.Count(); i++)
             {
                 string currentPluginName = pluginNames[i];
                 string shortPluginName = Path.GetFileName(currentPluginName);
+
                 try
                 {
-
-                    Signature signatureToCheck = new Signature(currentPluginName);
-
-                    if (signatureToCheck.CheckIfValid())
+                    Signature signature = new Signature(currentPluginName);
+                    if (signature.CheckIfValid())
                     {
                         Assembly assembly = Assembly.LoadFrom(currentPluginName);
-                        List<Type> pluginTypes = GetTypes<ICryptoPlugin>(assembly);
-                        if (pluginTypes.Count != 0)
-                        {
-                            for (int j = 0; j < pluginTypes.Count; j++)
-                            {
-                                ICryptoPlugin plugin = Activator.CreateInstance(pluginTypes[i]) as ICryptoPlugin;
-                                //
-                                //
-                                if (!(plugins.IsAddedToList(plugin)))
-                                {
-                                    MessageBox.Show("Данный продукт уже добавлен!");
-                                }
-                                else
-                                {
-                                    amountOfAddedPlugins++;
-                                }
-                            }
-                        }
+                        result.Add(currentPluginName);
                     }
                     else
                     {
-                        MessageBox.Show(shortPluginName + " Подлинность плагина не установлена!");
+                        MessageBox.Show(shortPluginName + " - " + "Подлинность плагина не установлена.");
                     }
                 }
-                catch (BadImageFormatException)
+                catch(BadImageFormatException)
                 {
                     MessageBox.Show(shortPluginName + " - " + "Ошибка загрузки dll");
                 }
@@ -98,7 +97,37 @@ namespace lab_3.Helpers
                 }
             }
 
-            //add to dict. and to combobox
+
+            return result.ToArray();
+        }
+
+        public static void LoadFuncPlugins(string[] pluginNames, Plugins plugins, Dictionary<string, int> dict, ComboBox comboBoxOfAlg)
+        {
+            //size of plugin list before this loading
+            int prevCounter = plugins.ListOfPlugins.Count();
+            int amountOfAddedPlugins = 0;
+
+            string[] validPlugins = GetValidPluginNames(pluginNames);
+            List<ICryptoPlugin> ListOfCryptoAlg = GetPlugins<ICryptoPlugin>(validPlugins);
+
+            if (ListOfCryptoAlg.Count != 0)
+            {
+                for (int i = 0; i < ListOfCryptoAlg.Count(); i++)
+                {
+                    if (!(plugins.IsAddedToList(ListOfCryptoAlg[i])))
+                    {
+                        MessageBox.Show(ListOfCryptoAlg[i].GetCryptoLoader().GetAlgorithmName() + " - " + "Данный продукт уже добавлен!");
+                    }
+                    else
+                    {
+                        amountOfAddedPlugins++;
+                    }
+                }
+            }
+
+
+            //add to dictionary and combobox
+
             for (int i = prevCounter; i < prevCounter + amountOfAddedPlugins; i++)
             {
                 dict.Add(plugins.ListOfPlugins[i].GetBasicExtension(), i);

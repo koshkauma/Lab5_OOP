@@ -15,9 +15,12 @@ namespace XorEncryption
         const string xorExt = ".xor";
         const int KeyTextIndex = 4;
         const int CheckBoxIndex = 6;
+
         public override object GetAlgorithmName()
         {
-            throw new NotImplementedException();
+            Object obj = new Object();
+            obj = "Сложение по модулю 2";
+            return obj;
         }
 
         public override List<Control> GetControls(Size size)

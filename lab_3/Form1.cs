@@ -250,7 +250,8 @@ namespace lab_3
 
                         ICryptoPlugin plugin = Activator.CreateInstance(pluginTypes[i]) as ICryptoPlugin;
                         dllList.ListOfPlugins.Add(plugin.GetCryptoLoader());
-                        dllComboBox.Items.Add(dllList.ListOfPlugins[i]);
+
+                        dllComboBox.Items.Add(dllList.ListOfPlugins[i].GetAlgorithmName());
                         panelCrypto.Controls.AddRange(dllList.ListOfPlugins[i].GetControls(new Size(100, 20)).ToArray());
                     }
 
@@ -323,3 +324,8 @@ namespace lab_3
 
 
 
+//сделать
+//норм переключение между алгоритмами
+//вынести некоторые методы в хелпер
+//лист плагинов и лист фабрик - проверки вынести
+//нормальная загрузка плагинов

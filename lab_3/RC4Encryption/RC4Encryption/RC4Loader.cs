@@ -13,9 +13,9 @@ namespace RC4Encryption
     {
         public const string textExt = ".txt";
         public const string RC4Ext = ".RC4";
-        const int KeyTextIndex = 1;
-        const int CheckBoxIndex = 4;
-        const int keySizeIndex = 6;
+        public const int KeyTextIndex = 1;
+        public const int CheckBoxIndex = 4;
+        public const int keySizeIndex = 6;
         
 
         public override object GetAlgorithmName()
@@ -110,26 +110,5 @@ namespace RC4Encryption
             }
         }
 
-
-        public override void EncryptFile(Control.ControlCollection controls, string sourcePath)
-        {
-            RC4Cipher RC4 = new RC4Cipher(controls[KeyTextIndex].Text, sourcePath, Convert.ToInt32(controls[keySizeIndex].Text));
-            CheckBox checkBox = (CheckBox)controls[CheckBoxIndex];
-            if (checkBox.Checked)
-            {
-                MessageBox.Show("Ключ сохранен в той же папке, что и Ваш файл.\r\nСам зашифрованный файл сохранен с расширением .RC4");
-                RC4.SaveKey();
-            };
-            RC4.EncryptFile(RC4Ext);
-            File.Delete(sourcePath);
-        }
-
-        public override string DecryptFile(Control.ControlCollection controls, string sourcePath)
-        {
-            RC4Cipher RC4 = new RC4Cipher(controls[KeyTextIndex].Text, sourcePath, Convert.ToInt32(controls[keySizeIndex].Text));
-            RC4.DecryptFile(textExt);
-            string outputFileWithOriginalText = Path.GetDirectoryName(sourcePath) + "\\" + Path.GetFileNameWithoutExtension(sourcePath) + textExt;
-            return outputFileWithOriginalText;
-        }
     }
 }

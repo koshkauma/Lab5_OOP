@@ -10,14 +10,15 @@ namespace XorEncryption
     {
         private string Key { get; set; }
         private string FileToReadPath { get; set; }
-
+        private string OutputPath { get; set; }
         public const string keyExt = ".xorkey";
-       // public const string ext = ".xor";
+        
 
-        public XorCipher(string key, string fileToReadPath)
+        public XorCipher(string key, string fileToReadPath, string outputPath)
         {
             Key = key;
             FileToReadPath = fileToReadPath;
+            OutputPath = outputPath;
         }
 
         //reading information from "FileToReadPath"
@@ -56,7 +57,7 @@ namespace XorEncryption
         }
 
 
-        public virtual void EncryptFile(string ext)
+        public virtual void EncryptFile()
         {
             int keyLength = Key.Length;
             string infoToEncrypt = GetStringFromFile(FileToReadPath);
@@ -73,14 +74,14 @@ namespace XorEncryption
 
             string infoToWrite = Encoding.Default.GetString(result);
 
-            string destFilePath = Path.GetDirectoryName(FileToReadPath) + "\\" + Path.GetFileNameWithoutExtension(FileToReadPath) + ext;
-            WriteResultToFile(destFilePath, infoToWrite);
+          
+            WriteResultToFile(OutputPath, infoToWrite);
         }
        
 
-        public virtual void DecryptFile(string ext)
+        public virtual void DecryptFile()
         {
-            EncryptFile(ext);
+            EncryptFile();
         }
 
     }

@@ -18,6 +18,7 @@ namespace RC4Encryption
         private int KeySize { get; set; }
         private string Key { get; set; }
         private string FileToReadPath { get; set; }
+        private string OutputFilePath { get; set;}
 
         public const string keyExt = ".RC4key";
 
@@ -41,7 +42,7 @@ namespace RC4Encryption
 
 
 
-        public RC4Cipher(string key, string fileToReadPath, int keySize)
+        public RC4Cipher(string key, string fileToReadPath, string outputFilePath, int keySize)
         {
             KeySize = keySize;
             Key = key;
@@ -49,6 +50,7 @@ namespace RC4Encryption
             byte[] keyBytes = Encoding.Default.GetBytes(Key);
             Init(keyBytes);
             FileToReadPath = fileToReadPath;
+            OutputFilePath = outputFilePath;
         }
 
         private byte keyItem()
@@ -78,7 +80,7 @@ namespace RC4Encryption
             return cipher;
         }
 
-        public virtual void EncryptFile(string ext)
+        public virtual void EncryptFile()
         {
             //read info from file
             string infoToEncrypt = GetStringFromFile(FileToReadPath);
@@ -93,8 +95,8 @@ namespace RC4Encryption
             }
 
             string resultStr = Encoding.Default.GetString(result);
-            string fileWithResult = Path.GetDirectoryName(FileToReadPath) + "\\" + Path.GetFileNameWithoutExtension(FileToReadPath) + ext;
-            WriteResultToFile(fileWithResult, resultStr);
+            
+            WriteResultToFile(OutputFilePath, resultStr);
         }
 
 
@@ -135,9 +137,9 @@ namespace RC4Encryption
         }
 
 
-        public virtual void DecryptFile(string ext)
+        public virtual void DecryptFile()
         {
-            EncryptFile(ext);
+            EncryptFile();
         }
 
 

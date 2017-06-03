@@ -18,6 +18,7 @@ namespace lab_3
     public partial class serializeForm : Form
     {
         const int listDisplayMemberIndex = 0;
+        const string textExt = ".txt";
         CosmeticListClass list = new CosmeticListClass();
 
         public serializeForm()
@@ -189,8 +190,6 @@ namespace lab_3
         }
 
 
-
-        //Plugins dllList = new Plugins();
         Plugins dllList = new Plugins();
         
         //string will be our extension 
@@ -273,17 +272,18 @@ namespace lab_3
 
                             if (currentIndexOfUsedPlugin == indexOfPluginForExt)
                             {
-                                string fileToLoad = dllList.ListOfPlugins[dllComboBox.SelectedIndex].GetCryptoLoader().DecryptFile(panelCrypto.Controls, inputFilePath);
+                                string outputFilePath = Path.GetDirectoryName(inputFilePath) + "\\" + Path.GetFileNameWithoutExtension(inputFilePath) + textExt;
+                                dllList.ListOfPlugins[dllComboBox.SelectedIndex].DecryptFile(panelCrypto.Controls, inputFilePath, outputFilePath);
                                 try
                                 {
-                                    list.DeserializeItemsInList(fileToLoad, factoryFormEditor);
+                                   list.DeserializeItemsInList(outputFilePath, factoryFormEditor);
                                 }
                                 catch (Exception exception)
                                 {
                                     string message = exception.Message;
                                     MessageBox.Show(message);
                                 }
-                                File.Delete(fileToLoad);
+                                File.Delete(outputFilePath);
                             }
                             else
                             {
@@ -325,8 +325,9 @@ namespace lab_3
                     {
                         if (saveFileDialog.ShowDialog() != DialogResult.Cancel)
                         {
+                            string outputFileDecrypted = Path.GetDirectoryName(saveFileDialog.FileName) + "\\" + Path.GetFileNameWithoutExtension(saveFileDialog.FileName) + dllList.ListOfPlugins[dllComboBox.SelectedIndex].GetBasicExtension();
                             list.SerializeItemsInList(saveFileDialog.FileName);
-                            dllList.ListOfPlugins[dllComboBox.SelectedIndex].GetCryptoLoader().EncryptFile(panelCrypto.Controls, saveFileDialog.FileName);
+                            dllList.ListOfPlugins[dllComboBox.SelectedIndex].EncryptFile(panelCrypto.Controls, saveFileDialog.FileName, outputFileDecrypted);
                             File.Delete(saveFileDialog.FileName);
                         }
                     }

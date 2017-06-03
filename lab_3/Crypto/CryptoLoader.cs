@@ -57,9 +57,7 @@ namespace lab_3.Crypto
         public abstract List<Control> GetControls(Size size);
 
         public abstract bool CheckFields(Control.ControlCollection controls);
-        public abstract void EncryptFile(Control.ControlCollection controls, string sourcePath);
-        public abstract string DecryptFile(Control.ControlCollection controls, string sourcePath);
-
+      
 
     }
 }

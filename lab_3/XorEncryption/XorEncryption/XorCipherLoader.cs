@@ -12,10 +12,8 @@ namespace XorEncryption
 {
     public class XorCipherLoader: CryptoLoader
     {
-        public const string textExt = ".txt";
-        public const string xorExt = ".xor";
-        const int KeyTextIndex = 1;
-        const int CheckBoxIndex = 3;
+        public const int KeyTextIndex = 1;
+        public const int CheckBoxIndex = 3;
 
         public override object GetAlgorithmName()
         {
@@ -50,28 +48,7 @@ namespace XorEncryption
        
 
       
-        public override void EncryptFile(Control.ControlCollection controls, string sourcePath)
-        {
-
-            XorCipher xorCipher = new XorCipher(controls[KeyTextIndex].Text, sourcePath);
-            CheckBox checkBox = (CheckBox)controls[CheckBoxIndex];
-            if (checkBox.Checked)
-            {
-                MessageBox.Show("Ключ сохранен в той же папке, что и Ваш файл.\r\nСам зашифрованный файл сохранен с расширением .xor");
-                xorCipher.SaveKey();
-            };
-            xorCipher.EncryptFile(xorExt);
-            File.Delete(sourcePath);
-
-        }
-
-        public override string DecryptFile(Control.ControlCollection controls, string sourcePath)
-        {
-            XorCipher xorCipher = new XorCipher(controls[KeyTextIndex].Text, sourcePath);
-            xorCipher.DecryptFile(textExt);
-            string outputFileWithOriginalText = Path.GetDirectoryName(sourcePath) + "\\" + Path.GetFileNameWithoutExtension(sourcePath) + textExt;
-            return outputFileWithOriginalText;
-        }
+       
 
     }
 }

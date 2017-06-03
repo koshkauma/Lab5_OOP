@@ -101,10 +101,10 @@ namespace lab_3.Helpers
             return result.ToArray();
         }
 
-        public static void LoadFuncPlugins(string[] pluginNames, Plugins plugins, Dictionary<string, int> dict, ComboBox comboBoxOfAlg)
+        public static void LoadFuncPlugins(string[] pluginNames, List<ICryptoPlugin> plugins, Dictionary<string, int> dict, ComboBox comboBoxOfAlg)
         {
             //size of plugin list before this loading
-            int prevCounter = plugins.ListOfPlugins.Count();
+            int prevCounter = plugins.Count();
             int amountOfAddedPlugins = 0;
 
             string[] validPlugins = GetValidPluginNames(pluginNames);
@@ -114,7 +114,7 @@ namespace lab_3.Helpers
             {
                 for (int i = 0; i < ListOfCryptoAlg.Count(); i++)
                 {
-                    if (!(plugins.IsAddedToList(ListOfCryptoAlg[i])))
+                    if (!(ListHelper.IsAddedToList<ICryptoPlugin>(ListOfCryptoAlg[i], plugins)))
                     {
                         MessageBox.Show(ListOfCryptoAlg[i].GetCryptoLoader().GetAlgorithmName() + " - " + "Данный продукт уже добавлен!");
                     }
@@ -124,14 +124,16 @@ namespace lab_3.Helpers
                     }
                 }
             }
+            
+
 
 
             //add to dictionary and combobox
 
             for (int i = prevCounter; i < prevCounter + amountOfAddedPlugins; i++)
             {
-                dict.Add(plugins.ListOfPlugins[i].GetBasicExtension(), i);
-                CryptoLoader currLoader = plugins.ListOfPlugins[i].GetCryptoLoader();
+                dict.Add(plugins[i].GetBasicExtension(), i);
+                CryptoLoader currLoader = plugins[i].GetCryptoLoader();
                 comboBoxOfAlg.Items.Add(currLoader.GetAlgorithmName());
             }
 

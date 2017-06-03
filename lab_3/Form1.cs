@@ -190,7 +190,7 @@ namespace lab_3
         }
 
 
-        Plugins dllList = new Plugins();
+        List<ICryptoPlugin> dllList = new List<ICryptoPlugin>();
         
         //string will be our extension 
         Dictionary<string, int> pluginsExtensions = new Dictionary<string, int>();
@@ -214,7 +214,7 @@ namespace lab_3
             {
                 LoadingOfPlugin.LoadFuncPlugins(pluginLoader.FileNames, dllList, pluginsExtensions, dllComboBox);
             }
-            if (dllList.ListOfPlugins.Count != 0)
+            if (dllList.Count != 0)
             {
                 InitCryptoComponents();
             }
@@ -240,16 +240,16 @@ namespace lab_3
         private void dllComboBox_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             panelCrypto.Controls.Clear();
-            panelCrypto.Controls.AddRange(dllList.ListOfPlugins[dllComboBox.SelectedIndex].GetCryptoLoader().GetControls(new Size(100, 20)).ToArray());
+            panelCrypto.Controls.AddRange(dllList[dllComboBox.SelectedIndex].GetCryptoLoader().GetControls(new Size(100, 20)).ToArray());
         }
         
 
         private void buttonDecrypt_Click_1(object sender, EventArgs e)
         {
-            if (dllList.ListOfPlugins.Count != 0)
+            if (dllList.Count != 0)
             {
                 //////
-                if (dllList.ListOfPlugins[dllComboBox.SelectedIndex].GetCryptoLoader().CheckFields(panelCrypto.Controls))
+                if (dllList[dllComboBox.SelectedIndex].GetCryptoLoader().CheckFields(panelCrypto.Controls))
                 {
                     //user choose file from directory
                     OpenFileDialog dlg = new OpenFileDialog();
@@ -273,7 +273,7 @@ namespace lab_3
                             if (currentIndexOfUsedPlugin == indexOfPluginForExt)
                             {
                                 string outputFilePath = Path.GetDirectoryName(inputFilePath) + "\\" + Path.GetFileNameWithoutExtension(inputFilePath) + textExt;
-                                dllList.ListOfPlugins[dllComboBox.SelectedIndex].DecryptFile(panelCrypto.Controls, inputFilePath, outputFilePath);
+                                dllList[dllComboBox.SelectedIndex].DecryptFile(panelCrypto.Controls, inputFilePath, outputFilePath);
                                 try
                                 {
                                    list.DeserializeItemsInList(outputFilePath, factoryFormEditor);
@@ -312,10 +312,10 @@ namespace lab_3
 
         private void buttonEncrypt_Click_1(object sender, EventArgs e)
         {
-            if (dllList.ListOfPlugins.Count != 0)
+            if (dllList.Count != 0)
             {
                 //////
-                if (dllList.ListOfPlugins[dllComboBox.SelectedIndex].GetCryptoLoader().CheckFields(panelCrypto.Controls))
+                if (dllList[dllComboBox.SelectedIndex].GetCryptoLoader().CheckFields(panelCrypto.Controls))
                 {
                     if (listBoxOfProducts.Items.Count == 0)
                     {
@@ -325,9 +325,9 @@ namespace lab_3
                     {
                         if (saveFileDialog.ShowDialog() != DialogResult.Cancel)
                         {
-                            string outputFileDecrypted = Path.GetDirectoryName(saveFileDialog.FileName) + "\\" + Path.GetFileNameWithoutExtension(saveFileDialog.FileName) + dllList.ListOfPlugins[dllComboBox.SelectedIndex].GetBasicExtension();
+                            string outputFileDecrypted = Path.GetDirectoryName(saveFileDialog.FileName) + "\\" + Path.GetFileNameWithoutExtension(saveFileDialog.FileName) + dllList[dllComboBox.SelectedIndex].GetBasicExtension();
                             list.SerializeItemsInList(saveFileDialog.FileName);
-                            dllList.ListOfPlugins[dllComboBox.SelectedIndex].EncryptFile(panelCrypto.Controls, saveFileDialog.FileName, outputFileDecrypted);
+                            dllList[dllComboBox.SelectedIndex].EncryptFile(panelCrypto.Controls, saveFileDialog.FileName, outputFileDecrypted);
                             File.Delete(saveFileDialog.FileName);
                         }
                     }
